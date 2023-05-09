@@ -242,4 +242,19 @@ function loadIframe() {
   }
 }
 
-function attachIframe
+function attachIframeLoadListener() {
+  queryOne('[data-content="iframe"] iframe').addEventListener('load', () => {
+    queryOne('.booking--loader').style.display = 'none';
+  });
+}
+
+function main() {
+  attachDataTriggerListeners();
+  attachDataTypeListeners();
+  attachDataClickListeners();
+  attachDataLocationDoctorListeners();
+  attachDataBtnListeners();
+  attachIframeLoadListener();
+}
+
+main();
