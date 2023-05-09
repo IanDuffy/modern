@@ -112,114 +112,101 @@ let frame = [
     officeID: 348028,
     iframe: 'dGhpcyBpcyAxNiBjaGFyc4hhG-uk1tjs2XM3Zuw0664='
   },
-
 ]
 
-document.addEventListener("DOMContentLoaded", function () {
-  const mainContainer = document.querySelector("#main-container");
-
-  mainContainer.addEventListener("click", function (event) {
-    const target = event.target;
-
-    if (target.matches("[data-trigger]")) {
-      handleDataTriggerClick(target);
-    } else if (target.matches('[data-type="doctor"]')) {
-      handleDataTypeDoctorClick(target);
-    } else if (target.matches('[data-type="location"]')) {
-      handleDataTypeLocationClick(target);
-    } else if (target.matches("[data-click]")) {
-      handleDataClick(target);
-    } else if (target.matches("[data-location]")) {
-      handleDataLocation(target);
-    } else if (target.matches("[data-doctor]")) {
-      handleDataDoctor(target);
-    } else if (target.matches('[data-btn="close"]')) {
-      handleDataBtnClose(target);
-    } else if (target.matches('[data-btn="prev"]')) {
-      handleDataBtnPrev(target);
-    }
-  });
-
-  const iframeElem = document.querySelector('[data-content="iframe"] iframe');
-  iframeElem.addEventListener("load", handleIframeLoad);
-});
-
-function handleDataTriggerClick(target) {
-  // ...
+function toggleShow(element) {
+  element.classList.toggle('show');
 }
 
-function handleDataTypeDoctorClick(target) {
-  // ...
+function queryAll(selector) {
+  return Array.from(document.querySelectorAll(selector));
 }
 
-function handleDataTypeLocationClick(target) {
-  // ...
+function queryOne(selector) {
+  return document.querySelector(selector);
 }
 
-function handleDataClick(target) {
-  // ...
+function showElement(element) {
+  element.style.display = '';
 }
 
-function handleDataLocation(target) {
-  // ...
+function hideElement(element) {
+  element.style.display = 'none';
 }
 
-function handleDataDoctor(target) {
-  // ...
+function showOfficeHour(locationID) {
+  queryAll('[office-hour]').forEach(hideElement);
+  queryAll(`[office-hour="${locationID}"]`).forEach(showElement);
 }
 
-function handleDataBtnClose(target) {
-  // ...
+function showIframe(locationID, doctorID) {
+  const iframeURL = `https://drchrono.com/scheduling/offices/${officeID}`;
+  const iframeElement = queryOne('[data-content="iframe"] iframe');
+  iframeElement.src = iframeURL;
 }
 
-function handleDataBtnPrev(target) {
-  // ...
-}
+function attachDataTriggerListeners() {
+  const dataTriggers = queryAll('[data-trigger]');
 
-function handleIframeLoad() {
-  // ...
-}
-
-function toggleClass(selector, className) {
-  const elems = document.querySelectorAll(selector);
-  elems.forEach(function (elem) {
-    elem.classList.toggle(className);
+  dataTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const dataType = trigger.getAttribute('data-trigger');
+      queryAll(`[data-type="${dataType}"]`).forEach(toggleShow);
+    });
   });
 }
 
-function hideElements(selector) {
-  const elems = document.querySelectorAll(selector);
-  elems.forEach(function (elem) {
-    elem.style.display = "none";
+function attachDataTypeListeners() {
+  queryAll('[data-type]').forEach(element => {
+    element.addEventListener('click', () => {
+      const dataType = element.getAttribute('data-type');
+      queryAll(`[data-type="${dataType}"]`).forEach(toggleShow);
+    });
   });
 }
 
-function showElements(selector) {
-  const elems = document.querySelectorAll(selector);
-  elems.forEach(function (elem) {
-    elem.style.display = "";
+function attachDataClickListeners() {
+  queryAll('[data-click]').forEach(element => {
+    element.addEventListener('click', () => {
+      const dataClick = element.getAttribute('data-click');
+      queryAll(`[data-click="${dataClick}"]`).forEach(toggleShow);
+    });
   });
 }
 
-function hideElementsByClass(className) {
-  const elems = document.getElementsByClassName(className);
-  for (let i = 0; i < elems.length; i++) {
-    elems[i].style.display = "none";
-  }
+function attachDataLocationDoctorListeners() {
+  queryAll('[data-location][data-doctor]').forEach(element => {
+    element.addEventListener('click', () => {
+      const locationID = element.getAttribute('data-location');
+      const doctorID = element.getAttribute('data-doctor');
+      showOfficeHour(locationID);
+      showIframe(locationID, doctorID);
+    });
+  });
 }
 
-function showElementsByClass(className) {
-  const elems = document.getElementsByClassName(className);
-  for (let i = 0; i < elems.length; i++) {
-    elems[i].style.display = "";
-  }
+function attachDataBtnListeners() {
+  queryAll('[data-btn]').forEach(element => {
+    element.addEventListener('click', () => {
+      const dataBtn = element.getAttribute('data-btn');
+      queryAll(`[data-btn="${dataBtn}"]`).forEach(toggleShow);
+    });
+  });
 }
 
-function hideElement(elem) {
-  elem.style.display = "none";
+function attachIframeLoadListener() {
+  queryOne('[data-content="iframe"] iframe').addEventListener('load', () => {
+    queryOne('.booking--loader').style.display = 'none';
+  });
 }
 
-function showElement(elem) {
-  elem.style.display = "";
+function main() {
+  attachDataTriggerListeners();
+  attachDataTypeListeners();
+  attachDataClickListeners();
+  attachDataLocationDoctorListeners();
+  attachDataBtnListeners();
+  attachIframeLoadListener();
 }
 
+main();
