@@ -118,7 +118,8 @@ let frame = [
 //displayChange();
 
 document.querySelectorAll('[data-trigger="location"]').forEach(function(element) {
-  element.addEventListener('click', function() {
+  element.addEventListener('click', function(event) {
+    event.stopPropagation(); // Add this line
     document.querySelectorAll('[data-type="location"]').forEach(function(locationElement) {
       locationElement.classList.toggle('show');
     });
@@ -126,7 +127,8 @@ document.querySelectorAll('[data-trigger="location"]').forEach(function(element)
 });
 
 document.querySelectorAll('[data-trigger="doctor"]').forEach(function(element) {
-  element.addEventListener('click', function() {
+  element.addEventListener('click', function(event) {
+    event.stopPropagation(); // Add this line
     document.querySelectorAll('[data-type="doctor"]').forEach(function(doctorElement) {
       doctorElement.classList.toggle('show');
     });
@@ -137,10 +139,11 @@ document.querySelectorAll('[data-trigger="doctor"]').forEach(function(element) {
 });
 
 
+
 // data-type doctor start // needs comments
 document.querySelectorAll('[data-type="doctor"]').forEach(function(element) {
   element.addEventListener('click', function() {
-    let activeTab = document.querySelector('[data-tab]:visible').dataset.tab;
+    let activeTab = document.querySelector('[data-tab]:not([style*="display: none"])').dataset.tab;
     let doctorID = this.dataset.id;
     let locationID;
 
@@ -153,7 +156,7 @@ document.querySelectorAll('[data-type="doctor"]').forEach(function(element) {
     });
 
     if (locationID) {
-      if (document.querySelectorAll('[data-tab]:visible [data-type="doctor"]:visible').length !== 1) {
+      if (document.querySelectorAll('[data-tab]:not([style*="display: none"]) [data-type="doctor"]:not([style*="display: none"])').length !== 1) {
         getIframe();
       }
     }
@@ -203,9 +206,10 @@ document.querySelectorAll('[data-type="doctor"]').forEach(function(element) {
 });
 
 // data-type location start //
+
 document.querySelectorAll('[data-type="location"]').forEach(function(element) {
   element.addEventListener('click', function() {
-    let activeTab = document.querySelector('[data-tab]:visible').dataset.tab;
+    let activeTab = document.querySelector('[data-tab]:not([style*="display: none"])').dataset.tab;
     let locationID = this.dataset.id;
     let id = this.dataset.id;
 
@@ -217,7 +221,7 @@ document.querySelectorAll('[data-type="location"]').forEach(function(element) {
     officeHour();
 
     if (doctorID) {
-      if (document.querySelectorAll('[data-tab]:visible [data-type="location"]:visible').length !== 1) {
+      if (document.querySelectorAll('[data-tab]:not([style*="display: none"]) [data-type="location"]:not([style*="display: none"])').length !== 1) {
         getIframe();
       }
     }
@@ -321,7 +325,7 @@ document.querySelectorAll('[data-click]').forEach(function(element) {
 // data-location // needs comments
 document.querySelectorAll('[data-location]').forEach(function(element) {
   element.addEventListener('click', function() {
-    let activeTab = document.querySelector('[data-tab]:visible').dataset.tab;
+    let activeTab = document.querySelector('[data-tab]:not([style*="display: none"])').dataset.tab;
     let locationID = this.dataset.location;
 
     document.querySelectorAll('[data-type="doctor"]').forEach(function(el) { el.style.display = 'none'; });
@@ -361,7 +365,7 @@ function dataLocation(locationID, activeTab) {
 // data-doctor start //
 document.querySelectorAll('[data-doctor]').forEach(function(element) {
   element.addEventListener('click', function() {
-    let activeTab = document.querySelector('[data-tab]:visible').dataset.tab;
+    let activeTab = document.querySelector('[data-tab]:not([style*="display: none"])').dataset.tab;
     let doctorID = this.dataset.doctor;
 
     document.querySelectorAll('[data-type="location"]').forEach(function(el) { el.style.display = 'none'; });
