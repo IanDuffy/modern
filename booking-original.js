@@ -126,9 +126,6 @@ $('[data-trigger="doctor"]').on('click', function() {
   $('.doctor--hours').toggleClass('hide')
 });
 
-//$('[data-type="doctor"]').eq(0).addClass('show')
-//$('[data-type="location"]').eq(0).addClass('show') 
-
 // data-type doctor start //
 $('[data-type="doctor"]').on('click', function() {
   activeTab = $('[data-tab]:visible').data('tab')
@@ -451,45 +448,11 @@ $('[data-btn="prev"]').on('click', function(){
 });
 // data-btn prev end //
 
-
 // get the iframe element
 const iframe = document.querySelector('[data-content="iframe"] iframe');
 // add a load event listener to the iframe
 iframe.addEventListener('load', function() {
   // code to execute when the iframe is loaded
   $('.booking--loader').hide()
-  //const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-  /*const image = iframeDoc.querySelector('img');
-  image.addEventListener('load', function() {
-    console.log('Image loaded!');
-    console.log($(this)); // or you can use `this` instead of `$(this)` if you don't need jQuery
-  });
-  */
 });
 
-/*function displayChange(){
-  const myDivs = Array.from(document.querySelectorAll('[data-tab]'));
-  const displayChangeEvent = new Event('displaychange');
-
-  const observer = new MutationObserver(mutations => {
-    mutations.forEach(mutation => {
-      if (mutation.attributeName === 'style' && myDivs.includes(mutation.target)) {
-        const myDiv = mutation.target;
-        if (myDiv.style.display === 'block') {
-          if(myDiv.dataset.tab==='iframe'){
-            //$('.doctor--hours').css('display', '')
-          }else{
-           // $('.doctor--hours').css('display', 'none')
-          }
-        }
-        myDiv.dispatchEvent(displayChangeEvent);
-      }
-    });
-  });
-  myDivs.forEach(div => observer.observe(div, { attributes: true }));
-  myDivs.forEach(div => {
-    div.addEventListener('displaychange', event => {
-      //console.log(`The display property of the div with data-tab="${div.dataset.tab}" has changed`);
-    });
-  });
-}*/

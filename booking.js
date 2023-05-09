@@ -117,26 +117,58 @@ let frame = [
 
 //displayChange();
 
-document.querySelectorAll('[data-trigger="location"]').forEach(function(element) {
-  element.addEventListener('click', function(event) {
-    event.stopPropagation(); // Add this line
-    document.querySelectorAll('[data-type="location"]').forEach(function(locationElement) {
-      locationElement.classList.toggle('show');
+document.querySelectorAll('[data-trigger="location"]').forEach(function (element) {
+  element.addEventListener('click', function (event) {
+    event.stopPropagation();
+    let target = event.currentTarget;
+    document.querySelectorAll('[data-type="location"]').forEach(function (locationElement) {
+      if (locationElement === target) {
+        locationElement.classList.toggle('show');
+      } else {
+        locationElement.classList.remove('show');
+      }
     });
   });
 });
 
-document.querySelectorAll('[data-trigger="doctor"]').forEach(function(element) {
-  element.addEventListener('click', function(event) {
-    event.stopPropagation(); // Add this line
-    document.querySelectorAll('[data-type="doctor"]').forEach(function(doctorElement) {
-      doctorElement.classList.toggle('show');
+document.querySelectorAll('[data-trigger="doctor"]').forEach(function (element) {
+  element.addEventListener('click', function (event) {
+    event.stopPropagation();
+    let target = event.currentTarget;
+    document.querySelectorAll('[data-type="doctor"]').forEach(function (doctorElement) {
+      if (doctorElement === target) {
+        doctorElement.classList.toggle('show');
+      } else {
+        doctorElement.classList.remove('show');
+      }
     });
-    document.querySelectorAll('.doctor--hours').forEach(function(hoursElement) {
+    document.querySelectorAll('.doctor--hours').forEach(function (hoursElement) {
       hoursElement.classList.toggle('hide');
     });
   });
 });
+
+document.querySelectorAll('[data-type="location"]').forEach(function (element) {
+  element.addEventListener('click', function () {
+    let locationID = this.dataset.id;
+    document.querySelectorAll('[data-type="doctor"]').forEach(function (docElement) {
+      let x = docElement.dataset.id;
+      let opis = locationID.split(' ');
+
+      for (let o of opis) {
+        let curr = o.split(':');
+        if (curr[0] === x) {
+          docElement.style.display = '';
+          document.querySelector(`[data-docdiv="${x}"]`).style.display = 'block';
+        } else {
+          docElement.style.display = 'none';
+          document.querySelector(`[data-docdiv="${x}"]`).style.display = 'none';
+        }
+      }
+    });
+  });
+});
+
 
 
 
