@@ -242,11 +242,56 @@ function loadIframe() {
   }
 }
 
-function attachIframeLoadListener() {
-  queryOne('[data-content="iframe"] iframe').addEventListener('load', () => {
-    queryOne('.booking--loader').style.display = 'none';
+function attachDataTriggerListeners() {
+  queryAll('[data-trigger="location"]').forEach(element => {
+    element.addEventListener('click', () => {
+      queryAll('[data-type="location"]').forEach(toggleShow);
+    });
+  });
+
+  queryAll('[data-trigger="doctor"]').forEach(element => {
+    element.addEventListener('click', () => {
+      queryAll('[data-type="doctor"]').forEach(toggleShow);
+      queryAll(".doctor--hours").forEach(toggleShow);
+    });
   });
 }
+
+function attachDataClickListeners() {
+  queryAll('[data-type="doctor"]').forEach(element => {
+    element.addEventListener('click', () => {
+      let activeTab = queryAll('[data-tab]').find(isVisible).getAttribute('data-tab');
+      let doctorID = element.getAttribute('data-id');
+      queryAll('[data-click="doctor"]').forEach(hideElement);
+      queryAll("[office-hour]").forEach(hideElement);
+
+      if (locationID && queryAll('[data-tab]:visible [data-type="doctor"]:visible').length !== 1) {
+        loadIframe();
+      }
+
+      if (queryAll('.show[data-type="doctor"]').length > 1) {
+        queryAll(`[data-id="${doctorID}"]`).forEach(toggleShow);
+      }
+
+      queryAll('[data-type="location"]').forEach(hideElement);
+      queryAll("[data-locdiv]").forEach(hideElement);
+
+      queryAll('[data-type="location"]').forEach(el => {
+        let id = el.getAttribute('data-id');
+        if (id.includes(doctorID)) {
+          showElement(el);
+          showElement(queryOne(`[data-locdiv="${id}"]`));
+        }
+      });
+
+      if (activeTab !== "selLocation" && activeTab !== "iframe") {
+        queryAll('[data-tab="selLocation"]').forEach(showElement);
+        queryAll(`[data-tab="${activeTab}"]`).forEach(hideElement);
+      }
+    });
+  });
+}
+
 
 function main() {
   attachDataTriggerListeners();
