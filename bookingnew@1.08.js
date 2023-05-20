@@ -298,25 +298,29 @@ function navigateTab(newTab) {
 }
 
 function navigateDoctorRegion(newRegion) {
-    if (newRegion === 'doctor-region-all') {
-        doctorCards.forEach(card => showParent(card));
-    } else {
-        const region = newRegion.replace('doctor-region-', '').toLowerCase();
+    switch (newRegion) {
+        case 'doctor-region-all': doctorCards.forEach(card => showParent(card)); break;
+        case 'doctor-region-tampa': doctorCards.forEach(card => card.querySelector('.doctor-region').innerHTML === 'Tampa' ? showParent(card) : hideParent(card)); break;
+        case 'doctor-region-orlando': doctorCards.forEach(card => card.querySelector('.doctor-region').innerHTML === 'Orlando' ? showParent(card) : hideParent(card)); break;
+    }
+
+    if (locationId) {
         doctorCards.forEach(card => {
-            const cardRegion = card.querySelector('.doctor-region').innerHTML.toLowerCase().trim();
-            cardRegion === region ? showParent(card) : hideParent(card);
+            if (!locationId.includes(card.attributes['card-doctor'].value)) hideParent(card)
         });
     }
 }
 
 function navigateLocationRegion(newRegion) {
-    if (newRegion === 'location-region-all') {
-        locationCards.forEach(card => showParent(card));
-    } else {
-        const region = newRegion.replace('location-region-', '').toLowerCase();
+    switch (newRegion) {
+        case 'location-region-all': locationCards.forEach(card => showParent(card)); break;
+        case 'location-region-tampa': locationCards.forEach(card => card.querySelector('.location-region').innerHTML === 'Tampa' ? showParent(card) : hideParent(card)); break;
+        case 'location-region-orlando': locationCards.forEach(card => card.querySelector('.location-region').innerHTML === 'Orlando' ? showParent(card) : hideParent(card)); break;
+    }
+
+    if (doctorId) {
         locationCards.forEach(card => {
-            const cardRegion = card.querySelector('.location-region').innerHTML.toLowerCase().trim();
-            cardRegion === region ? showParent(card) : hideParent(card);
+            if (!card.attributes['card-location'].value.includes(doctorId)) hideParent(card)
         });
     }
 }
