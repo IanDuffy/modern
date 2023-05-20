@@ -38,6 +38,7 @@ function iniStarterTab() {
             navigateTab(doctorsTab)
             sidebarDoctorPlaceholder.classList.add('active')
             sidebarLocationPlaceholder.classList.remove('active')
+            navigateDoctorRegion('doctor-region-all')
         }
     })
 
@@ -46,6 +47,7 @@ function iniStarterTab() {
             navigateTab(locationsTab)
             sidebarLocationPlaceholder.classList.add('active')
             sidebarDoctorPlaceholder.classList.remove('active')
+            navigateLocationRegion('location-region-all')
         }
     })
 
