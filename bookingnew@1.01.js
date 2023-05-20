@@ -217,6 +217,7 @@ function populateSidebar() {
     if (doctorId && locationId) {
         sidebarDoctorPlaceholder.querySelector('img').src = getThumbnailsSrc(doctorThumbnails, doctorId, 'doctor');
         sidebarDoctorPlaceholder.querySelector('.booking-item-title').innerHTML = document.querySelector('[doctor-name="' + doctorId + '"]').innerHTML;
+        sidebarDoctorPlaceholder.querySelector('.booking-item-subtitle').innerHTML = document.querySelector('[location-name="' + locationId + '"]').innerHTML
         sidebarLocationTitle.innerHTML = 'Locations for ' + document.querySelector('[doctor-name="' + doctorId + '"]').innerHTML;
         sidebarLocationPlaceholder.querySelector('img').src = getThumbnailsSrc(locationThumbnails, locationId, 'location');
         sidebarLocationPlaceholder.querySelector('.booking-item-title').innerHTML = document.querySelector('[location-name="' + locationId + '"]').innerHTML
