@@ -298,10 +298,14 @@ function navigateTab(newTab) {
 }
 
 function navigateDoctorRegion(newRegion) {
-    switch (newRegion) {
-        case 'doctor-region-all': doctorCards.forEach(card => showParent(card)); break;
-        case 'doctor-region-tampa': doctorCards.forEach(card => card.querySelector('.doctor-region').innerHTML === 'Tampa' ? showParent(card) : hideParent(card)); break;
-        case 'doctor-region-orlando': doctorCards.forEach(card => card.querySelector('.doctor-region').innerHTML === 'Orlando' ? showParent(card) : hideParent(card)); break;
+    if (newRegion === 'doctor-region-all') {
+        doctorCards.forEach(card => showParent(card));
+    } else {
+        const region = newRegion.replace('doctor-region-', '');
+        doctorCards.forEach(card => {
+            const cardRegion = card.querySelector('.doctor-region').innerHTML.toLowerCase();
+            cardRegion === region ? showParent(card) : hideParent(card);
+        });
     }
 
     if (locationId) {
@@ -312,10 +316,14 @@ function navigateDoctorRegion(newRegion) {
 }
 
 function navigateLocationRegion(newRegion) {
-    switch (newRegion) {
-        case 'location-region-all': locationCards.forEach(card => showParent(card)); break;
-        case 'location-region-tampa': locationCards.forEach(card => card.querySelector('.location-region').innerHTML === 'Tampa' ? showParent(card) : hideParent(card)); break;
-        case 'location-region-orlando': locationCards.forEach(card => card.querySelector('.location-region').innerHTML === 'Orlando' ? showParent(card) : hideParent(card)); break;
+    if (newRegion === 'location-region-all') {
+        locationCards.forEach(card => showParent(card));
+    } else {
+        const region = newRegion.replace('location-region-', '');
+        locationCards.forEach(card => {
+            const cardRegion = card.querySelector('.location-region').innerHTML.toLowerCase();
+            cardRegion === region ? showParent(card) : hideParent(card);
+        });
     }
 
     if (doctorId) {
@@ -324,6 +332,7 @@ function navigateLocationRegion(newRegion) {
         });
     }
 }
+
 
 function show(div) {
     div.style.display = 'block';
