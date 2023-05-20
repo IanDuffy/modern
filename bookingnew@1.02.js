@@ -82,44 +82,20 @@ function iniStarterTab() {
 
 function iniDoctorsTab() {
     doctorCards = document.querySelectorAll('[card-doctor]');
-    doctorRegionAll = document.querySelector('#doctor-region-all');
-    doctorRegionTampa = document.querySelector('#doctor-region-tampa');
-    doctorRegionOrlando = document.querySelector('#doctor-region-orlando');
-
     doctorThumbnails = document.querySelectorAll('[doctor-thumbnail]');
 
-    doctorRegions = [doctorRegionAll, doctorRegionTampa, doctorRegionOrlando];
-
-    doctorRegions.forEach(region => {
-        region.addEventListener('click', (e) => {
-            navigateDoctorRegion(region.id);
-            singleClassChange(doctorRegions, region, 'active')
-        })
-    })
 }
 
 function iniLocationsTab() {
     locationCards = document.querySelectorAll('[card-location]');
-    locationRegionAll = document.querySelector('#location-region-all');
-    locationRegionTampa = document.querySelector('#location-region-tampa');
-    locationRegionOrlando = document.querySelector('#location-region-orlando');
-
     locationThumbnails = document.querySelectorAll('[location-thumbnail]');
     locationDetails = document.querySelector('#location-details')
     locationMaps = document.querySelectorAll('[location-map]');
     map = document.querySelector('#booking-map-sidebar')
-
     locationAddress = document.querySelector('#location-address');
     locationZip = document.querySelector('#location-zip')
 
-    locationRegions = [locationRegionAll, locationRegionTampa, locationRegionOrlando];
 
-    locationRegions.forEach(region => {
-        region.addEventListener('click', (e) => {
-            navigateLocationRegion(region.id);
-            singleClassChange(locationRegions, region, 'active')
-        })
-    })
 }
 
 function iniDoctorCta() {
