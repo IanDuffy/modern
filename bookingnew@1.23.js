@@ -214,6 +214,10 @@ function iniNavButtons() {
 }
 
 function populateSidebar() {
+
+    radioLocation.forEach(button => button.querySelector('.booking-radio-button').classList.remove('checked'));
+    radioDoctor.forEach(button => button.querySelector('.booking-radio-button').classList.remove('checked'));
+  
     if (doctorId && locationId) {
         sidebarDoctorPlaceholder.querySelector('img').src = getThumbnailsSrc(doctorThumbnails, doctorId, 'doctor');
         sidebarDoctorPlaceholder.querySelector('.booking-item-title').innerHTML = document.querySelector('[doctor-name="' + doctorId + '"]').innerHTML;
