@@ -38,6 +38,7 @@ function iniStarterTab() {
             navigateTab(doctorsTab)
             sidebarDoctorPlaceholder.classList.add('active')
             sidebarLocationPlaceholder.classList.remove('active')
+            navigateDoctorRegion('doctor-region-all')
         }
     })
 
@@ -46,6 +47,7 @@ function iniStarterTab() {
             navigateTab(locationsTab)
             sidebarLocationPlaceholder.classList.add('active')
             sidebarDoctorPlaceholder.classList.remove('active')
+            navigateLocationRegion('location-region-all')
         }
     })
 
@@ -292,6 +294,34 @@ function navigateTab(newTab) {
     } else {
         show(starterText)
         hide(backButton)
+    }
+}
+
+function navigateDoctorRegion(newRegion) {
+    switch (newRegion) {
+        case 'doctor-region-all': doctorCards.forEach(card => showParent(card)); break;
+        case 'doctor-region-tampa': doctorCards.forEach(card => card.querySelector('.doctor-region').innerHTML === 'Tampa' ? showParent(card) : hideParent(card)); break;
+        case 'doctor-region-orlando': doctorCards.forEach(card => card.querySelector('.doctor-region').innerHTML === 'Orlando' ? showParent(card) : hideParent(card)); break;
+    }
+
+    if (locationId) {
+        doctorCards.forEach(card => {
+            if (!locationId.includes(card.attributes['card-doctor'].value)) hideParent(card)
+        });
+    }
+}
+
+function navigateLocationRegion(newRegion) {
+    switch (newRegion) {
+        case 'location-region-all': locationCards.forEach(card => showParent(card)); break;
+        case 'location-region-tampa': locationCards.forEach(card => card.querySelector('.location-region').innerHTML === 'Tampa' ? showParent(card) : hideParent(card)); break;
+        case 'location-region-orlando': locationCards.forEach(card => card.querySelector('.location-region').innerHTML === 'Orlando' ? showParent(card) : hideParent(card)); break;
+    }
+
+    if (doctorId) {
+        locationCards.forEach(card => {
+            if (!card.attributes['card-location'].value.includes(doctorId)) hideParent(card)
+        });
     }
 }
 
