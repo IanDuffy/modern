@@ -307,12 +307,6 @@ function navigateDoctorRegion(newRegion) {
             cardRegion === region ? showParent(card) : hideParent(card);
         });
     }
-
-    if (locationId) {
-        doctorCards.forEach(card => {
-            if (!locationId.includes(card.attributes['card-doctor'].value)) hideParent(card)
-        });
-    }
 }
 
 function navigateLocationRegion(newRegion) {
@@ -325,13 +319,8 @@ function navigateLocationRegion(newRegion) {
             cardRegion === region ? showParent(card) : hideParent(card);
         });
     }
-
-    if (doctorId) {
-        locationCards.forEach(card => {
-            if (!card.attributes['card-location'].value.includes(doctorId)) hideParent(card)
-        });
-    }
 }
+
 
 function show(div) {
     div.style.display = 'block';
