@@ -301,9 +301,9 @@ function navigateDoctorRegion(newRegion) {
     if (newRegion === 'doctor-region-all') {
         doctorCards.forEach(card => showParent(card));
     } else {
-        const region = newRegion.replace('doctor-region-', '');
+        const region = newRegion.replace('doctor-region-', '').toLowerCase();
         doctorCards.forEach(card => {
-            const cardRegion = card.querySelector('.doctor-region').innerHTML.toLowerCase();
+            const cardRegion = card.querySelector('.doctor-region').innerHTML.toLowerCase().trim();
             cardRegion === region ? showParent(card) : hideParent(card);
         });
     }
@@ -319,9 +319,9 @@ function navigateLocationRegion(newRegion) {
     if (newRegion === 'location-region-all') {
         locationCards.forEach(card => showParent(card));
     } else {
-        const region = newRegion.replace('location-region-', '');
+        const region = newRegion.replace('location-region-', '').toLowerCase();
         locationCards.forEach(card => {
-            const cardRegion = card.querySelector('.location-region').innerHTML.toLowerCase();
+            const cardRegion = card.querySelector('.location-region').innerHTML.toLowerCase().trim();
             cardRegion === region ? showParent(card) : hideParent(card);
         });
     }
@@ -332,7 +332,6 @@ function navigateLocationRegion(newRegion) {
         });
     }
 }
-
 
 function show(div) {
     div.style.display = 'block';
