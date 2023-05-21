@@ -266,9 +266,9 @@ function populateSidebar() {
         return;
     }
 
-    sidebarLocationPlaceholder.querySelector('img').src = 'https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/6463e481967df28518616d6c_person_outline_24px.svg';
+    sidebarLocationPlaceholder.querySelector('img').src = 'https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/646a284464dc0b5ec35aa7ab_museum.svg';
     sidebarLocationPlaceholder.querySelector('.booking-item-title').innerHTML = 'Select Location'
-    sidebarDoctorPlaceholder.querySelector('img').src = 'https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/6463e481967df28518616d6c_person_outline_24px.svg';
+    sidebarDoctorPlaceholder.querySelector('img').src = 'https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/646a28190847ecf19cb661ac_supervised_user_circle.svg';
     sidebarDoctorPlaceholder.querySelector('.booking-item-title').innerHTML = 'Select Doctor'
 
     show(sidebarLocationPlaceholder)
