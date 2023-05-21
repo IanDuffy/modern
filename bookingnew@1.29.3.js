@@ -259,28 +259,8 @@ function populateSidebar() {
         show(locationDetails)
         show(map)
         map.querySelector('img').src = getMapSrc(locationId);
-        // Get the divs containing the latitude and longitude for the selected location.
-        // const latDiv = document.querySelector('[location-id="' + locationId + '"] .latitude');
-        // const lngDiv = document.querySelector('[location-id="' + locationId + '"] .longitude');
-        // Check if the divs exist and contain numbers.
-        //if (latDiv && lngDiv && !isNaN(latDiv.innerHTML) && !isNaN(lngDiv.innerHTML)) {
-            // const lat = parseFloat(latDiv.innerHTML);
-            // const lng = parseFloat(lngDiv.innerHTML);
-            // Initialize the Mapbox map.
-            mapboxgl.accessToken = 'pk.eyJ1IjoiaWR1ZmZ5IiwiYSI6ImNsZTUzZTAwZTA2cXEzd25xdDYxcTY2M3IifQ._wA9UjVFdBBYeyx30y-kVw';
-            const map = new mapboxgl.Map({
-                container: 'map', 
-                style: 'mapbox://styles/iduffy/clhget0j8003001qs9jwj4m82',
-                center: [-81.458288, 28.48546645982558],
-                zoom: 15
-            });
-            // Add a marker at the selected location's coordinates.
-            // new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
-        //}
         locationAddress.innerHTML = document.querySelector('[location-address="' + locationId + '"]').innerHTML;
         locationZip.innerHTML = document.querySelector('[location-zip="' + locationId + '"]').innerHTML
-
-
         return;
     }
 
