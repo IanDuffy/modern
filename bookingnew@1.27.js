@@ -1,5 +1,3 @@
-let cardFilters;
-
 initData();
 iniNavButtons();
 iniStarterTab();
@@ -15,8 +13,6 @@ function initData() {
     frame = [];
     iframes = document.querySelectorAll('.iframe-text');
     officeIds = document.querySelectorAll('.officeid-text');
-    cardFilters = document.querySelectorAll('.card-filters');
-    showFilters();
     for (let i = 0; i < officeIds.length; i++) {
         const obj = {
             officeID: officeIds[i].innerHTML,
@@ -88,11 +84,8 @@ function iniDoctorsTab() {
     doctorRegionAll = document.querySelector('#doctor-region-all');
     doctorRegionTampa = document.querySelector('#doctor-region-tampa');
     doctorRegionOrlando = document.querySelector('#doctor-region-orlando');
-
     doctorThumbnails = document.querySelectorAll('[doctor-thumbnail]');
-
     doctorRegions = [doctorRegionAll, doctorRegionTampa, doctorRegionOrlando];
-
     doctorRegions.forEach(region => {
         region.addEventListener('click', (e) => {
             navigateDoctorRegion(region.id);
@@ -106,12 +99,10 @@ function iniLocationsTab() {
     locationRegionAll = document.querySelector('#location-region-all');
     locationRegionTampa = document.querySelector('#location-region-tampa');
     locationRegionOrlando = document.querySelector('#location-region-orlando');
-
     locationThumbnails = document.querySelectorAll('[location-thumbnail]');
     locationDetails = document.querySelector('#location-details')
     locationMaps = document.querySelectorAll('[location-map]');
     map = document.querySelector('#booking-map-sidebar')
-
     locationAddress = document.querySelector('#location-address');
     locationZip = document.querySelector('#location-zip')
 
@@ -127,7 +118,6 @@ function iniLocationsTab() {
 
 function iniDoctorCta() {
     doctorCtas = document.querySelectorAll('[doctor-cta]');
-    hideFilters();
     doctorCtas.forEach(cta => {
         cta.addEventListener('click', (e) => {
             doctorId = cta.attributes['doctor-cta'].value;
@@ -139,7 +129,6 @@ function iniDoctorCta() {
 
 function iniLocationCta() {
     locationCtas = document.querySelectorAll('[location-cta]');
-    hideFilters();
     locationCtas.forEach(cta => {
         cta.addEventListener('click', (e) => {
             locationId = cta.attributes['location-cta'].value
@@ -152,14 +141,11 @@ function iniLocationCta() {
 function iniNavButtons() {
     closeButton = document.querySelector('#close-button');
     backButton = document.querySelector('#back-button');
-
     closeButton.addEventListener('click', (e) => location.href = '/');
-    
     backButton.addEventListener('click', (e) => {
         switch (findActiveTab()) {
             case 'starter-tab':
                 location.href = '/'
-                showFilters();
                 break;
             case 'all-doctors-tab':
                 if (locationId) {
@@ -172,8 +158,6 @@ function iniNavButtons() {
                 } else {
                     navigateTab(starterTab)
                 }
-                showFilters();
-
                 break;
             case 'all-locations-tab':
                 if (doctorId) {
@@ -188,7 +172,6 @@ function iniNavButtons() {
                     sidebarDoctorPlaceholder.classList.remove('active')
                     navigateTab(starterTab)
                 }
-                showFilters();
                 break;
             case 'iframe-tab':
                 if (prev === 'ref') {
@@ -212,7 +195,6 @@ function iniNavButtons() {
                     populateSidebar()
                     navigateLocationRegion('location-region-all')
                 }
-                showFilters();
                 break;
         }
     })
@@ -236,7 +218,6 @@ function populateSidebar() {
         show(locationDetails)
         show(map)
         map.querySelector('img').src = getMapSrc(locationId);
-
         show(sidebarDoctor)
         show(sidebarLocation)
         show(sidebarDoctorPlaceholder)
@@ -362,18 +343,6 @@ function show(div) {
 
 function hide(div) {
     div.style.display = 'none';
-}
-
-function hideFilters() {
-    cardFilters.forEach(filter => {
-        hide(filter);
-    });
-}
-
-function showFilters() {
-    cardFilters.forEach(filter => {
-        show(filter);
-    });
 }
 
 function findActiveTab() {
