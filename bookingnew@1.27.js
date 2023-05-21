@@ -261,6 +261,8 @@ function populateSidebar() {
         map.querySelector('img').src = getMapSrc(locationId);
         locationAddress.innerHTML = document.querySelector('[location-address="' + locationId + '"]').innerHTML;
         locationZip.innerHTML = document.querySelector('[location-zip="' + locationId + '"]').innerHTML
+
+
         return;
     }
 
