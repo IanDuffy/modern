@@ -1,3 +1,5 @@
+let cardFilters;
+
 initData();
 iniNavButtons();
 iniStarterTab();
@@ -8,8 +10,6 @@ iniLocationCta();
 initializeIframe();
 iniRadioButtons();
 checkIncomingData()
-
-let cardFilters;
 
 function initData() {
     frame = [];
