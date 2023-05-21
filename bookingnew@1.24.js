@@ -9,11 +9,13 @@ initializeIframe();
 iniRadioButtons();
 checkIncomingData()
 
+let cardFilters;
 
 function initData() {
     frame = [];
     iframes = document.querySelectorAll('.iframe-text');
     officeIds = document.querySelectorAll('.officeid-text');
+    cardFilters = document.querySelectorAll('.card-filters');
     for (let i = 0; i < officeIds.length; i++) {
         const obj = {
             officeID: officeIds[i].innerHTML,
@@ -124,7 +126,10 @@ function iniLocationsTab() {
 
 function iniDoctorCta() {
     doctorCtas = document.querySelectorAll('[doctor-cta]');
-
+     // Hide the region tabs
+    document.querySelectorAll('.card-filters').forEach(filter => {
+        hide(filter);
+    });
     doctorCtas.forEach(cta => {
         cta.addEventListener('click', (e) => {
             doctorId = cta.attributes['doctor-cta'].value;
@@ -136,7 +141,10 @@ function iniDoctorCta() {
 
 function iniLocationCta() {
     locationCtas = document.querySelectorAll('[location-cta]');
-
+    // Hide the region tabs
+    document.querySelectorAll('.card-filters').forEach(filter => {
+        hide(filter);
+    });
     locationCtas.forEach(cta => {
         cta.addEventListener('click', (e) => {
             locationId = cta.attributes['location-cta'].value
@@ -156,6 +164,9 @@ function iniNavButtons() {
         switch (findActiveTab()) {
             case 'starter-tab':
                 location.href = '/'
+                cardFilters.forEach(filter => {
+                    show(filter);
+                });
                 break;
             case 'all-doctors-tab':
                 if (locationId) {
@@ -168,7 +179,9 @@ function iniNavButtons() {
                 } else {
                     navigateTab(starterTab)
                 }
-
+                cardFilters.forEach(filter => {
+                    show(filter);
+                });
                 break;
             case 'all-locations-tab':
                 if (doctorId) {
@@ -183,7 +196,9 @@ function iniNavButtons() {
                     sidebarDoctorPlaceholder.classList.remove('active')
                     navigateTab(starterTab)
                 }
-
+                cardFilters.forEach(filter => {
+                    show(filter);
+                });
                 break;
             case 'iframe-tab':
                 if (prev === 'ref') {
@@ -207,7 +222,9 @@ function iniNavButtons() {
                     populateSidebar()
                     navigateLocationRegion('location-region-all')
                 }
-
+                cardFilters.forEach(filter => {
+                    show(filter);
+                });
                 break;
         }
     })
@@ -357,6 +374,18 @@ function show(div) {
 
 function hide(div) {
     div.style.display = 'none';
+}
+
+function hideFilters() {
+    cardFilters.forEach(filter => {
+        hide(filter);
+    });
+}
+
+function showFilters() {
+    cardFilters.forEach(filter => {
+        show(filter);
+    });
 }
 
 function findActiveTab() {
