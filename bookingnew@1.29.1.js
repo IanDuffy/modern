@@ -263,7 +263,7 @@ function populateSidebar() {
         // const latDiv = document.querySelector('[location-id="' + locationId + '"] .latitude');
         // const lngDiv = document.querySelector('[location-id="' + locationId + '"] .longitude');
         // Check if the divs exist and contain numbers.
-        // if (latDiv && lngDiv && !isNaN(latDiv.innerHTML) && !isNaN(lngDiv.innerHTML)) {
+        //if (latDiv && lngDiv && !isNaN(latDiv.innerHTML) && !isNaN(lngDiv.innerHTML)) {
             // const lat = parseFloat(latDiv.innerHTML);
             // const lng = parseFloat(lngDiv.innerHTML);
             // Initialize the Mapbox map.
@@ -276,7 +276,7 @@ function populateSidebar() {
             });
             // Add a marker at the selected location's coordinates.
             // new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
-        }
+        //}
         locationAddress.innerHTML = document.querySelector('[location-address="' + locationId + '"]').innerHTML;
         locationZip.innerHTML = document.querySelector('[location-zip="' + locationId + '"]').innerHTML
 
