@@ -7,6 +7,8 @@ var pageWrapper = document.querySelector('.page-wrapper');
 var footer = document.querySelector('.footer');
 var windowHeight = window.innerHeight;
 
+document.documentElement.lang = "en";
+
 // Event listener for the menu button
 menuOpenButton.addEventListener('click', function() {
     // Make the menu wrapper visible
