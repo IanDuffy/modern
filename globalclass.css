@@ -1,0 +1,135 @@
+/* Make text look crisper and more legible in all browsers */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Focus state style for keyboard navigation for the focusable elements */
+*[tabindex]:focus-visible,
+  input[type="file"]:focus-visible {
+   outline: 0.125rem solid #4d65ff;
+   outline-offset: 0.125rem;
+}
+
+/* Get rid of top margin on first element in any rich text element */
+.w-richtext > :not(div):first-child, .w-richtext > div:first-child > :first-child {
+  margin-top: 0 !important;
+}
+
+/* Get rid of bottom margin on last element in any rich text element */
+.w-richtext>:last-child, .w-richtext ol li:last-child, .w-richtext ul li:last-child {
+	margin-bottom: 0 !important;
+}
+
+/* Make sure containers never lose their center alignment */
+.container-medium,.container-small, .container-large {
+	margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* Apply "..." after 3 lines of text */
+.text-style-3lines {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
+/* Apply "..." after 2 lines of text */
+.text-style-2lines {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+/* Adds inline flex display */
+.display-inlineflex {
+  display: inline-flex;
+}
+
+/* These classes are never overwritten */
+.hide {
+  display: none !important;
+}
+
+@media screen and (max-width: 991px) {
+    .hide, .hide-tablet {
+        display: none !important;
+    }
+}
+  @media screen and (max-width: 767px) {
+    .hide-mobile-landscape{
+      display: none !important;
+    }
+}
+  @media screen and (max-width: 479px) {
+    .hide-mobile{
+      display: none !important;
+    }
+}
+
+@media screen and (max-width:1120px) and (min-width:787px) {
+  	.custom-hide {
+    	display: none;
+    }
+  }
+  @media screen and (max-width:393px) {
+  	#bookNowNav {
+    	display: none;
+    }
+  }
+  .navbar_menu-wrapper.is--open .navbar_menu {
+  	transform: translate(0%, 0%);
+  }
+  .navbar_menu-wrapper.is--open .navbar_scrim {
+  	opacity: 1;
+  }
+  .no-scroll {
+    overflow: hidden;
+	}
+.slider-snap-list, .slider-snap-list-small {
+  direction: ltr;
+  overflow-x: scroll;
+  overscroll-behavior-x: contain;
+  scroll-snap-stop: normal;
+  -ms-scroll-snap-type: x mandatory;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+ }
+
+.scroll-snap-item {
+  scroll-snap-align: center;
+ }
+
+[data-slider] {
+    cursor: grab;
+  }
+
+[data-slider].active {
+    scroll-snap-type: none;
+    cursor: grabbing;
+  }
+
+@media screen and (min-width:992px) {
+  .slider-snap-list::-webkit-scrollbar, .slider-snap-list-small::-webkit-scrollbar {
+    -webkit-appearance: none;
+    display: none;
+    }
+ }
+
+.icon-button-outline.is-disabled .icon-button-inner {
+    border-color: rgba(28, 27, 31, 0.12);
+    pointer-events: none; /* Disable pointer events on disabled buttons */
+  }
+.icon-button-outline.is-disabled .icon-button-inner:hover {
+    background-color: none; /* Remove hover background color */
+  }
+.icon-button-outline.is-disabled .icon-button-inner:hover .icon-24 {
+    opacity: 0.38; /* Also reduce the opacity of the icon on hover */
+  }
+.icon-button-outline.is-disabled .icon-24 {
+    opacity: 0.38;
+  }
