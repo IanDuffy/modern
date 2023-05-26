@@ -117,9 +117,9 @@ function slide(direction) {
 }
 
 function initSliders() {
-  const sliders = document.querySelectorAll("[data-carousel]");
-  const prevButtons = document.querySelectorAll("[data-prev]");
-  const nextButtons = document.querySelectorAll("[data-next]");
+  const sliders = document.querySelectorAll("[card-carousel]");
+  const prevButtons = document.querySelectorAll("[card-prev]");
+  const nextButtons = document.querySelectorAll("[card-next]");
 
   sliders.forEach((slider, index) => {
     const prevButton = prevButtons[index];
