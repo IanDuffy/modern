@@ -133,3 +133,13 @@ body {
 .icon-button-outline.is-disabled .icon-24 {
     opacity: 0.38;
   }
+
+.faq-item.is--expanded .faq-text-content-block{
+  	height: auto;
+  }
+  .faq-item.is--expanded .faq-answer-content {
+    padding-bottom: 3rem;
+  }
+  .faq-item.is--expanded .faq-arrow{
+  	transform: rotate(180deg);
+  }
