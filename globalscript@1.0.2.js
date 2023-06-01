@@ -56,7 +56,7 @@ window.addEventListener('scroll', throttle(function() {
     }
 }, 200));
   
-let faqItems = document.querySelectorAll('.faq-item');
+let faqItems = document.querySelectorAll('.faq-rich-text h3');
 faqItems.forEach((item) => {
   item.addEventListener('click', () => {
     item.classList.toggle('is--expanded');

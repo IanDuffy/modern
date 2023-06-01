@@ -1,3 +1,4 @@
+<style>
 /* Make text look crisper and more legible in all browsers */
 body {
   -webkit-font-smoothing: antialiased;
@@ -90,7 +91,7 @@ body {
   .no-scroll {
     overflow: hidden;
 	}
-.slider-snap-list, .slider-snap-list-small {
+.slider-snap-list, .slider-snap-list-small, .review-carousel {
   direction: ltr;
   overflow-x: scroll;
   overscroll-behavior-x: contain;
@@ -100,15 +101,30 @@ body {
   scrollbar-width: none;
  }
 
-.scroll-snap-item {
+.scroll-snap-item, .card-review {
   scroll-snap-align: center;
  }
+ .review-carousel > .card-review:nth-child(4n+1) {
+  background-color: #f8edfb;
+}
 
-[data-slider] {
+.review-carousel > .card-review:nth-child(4n+2) {
+  background-color: #e8f5e3;
+}
+
+.review-carousel > .card-review:nth-child(4n+3) {
+  background-color: #eff0ff;
+}
+
+.review-carousel > .card-review:nth-child(4n+4) {
+  background-color: #e3f3ff;
+}
+
+[data-slider], [card-carousel] {
     cursor: grab;
   }
 
-[data-slider].active {
+[data-slider].active, [card-carousel].active {
     scroll-snap-type: none;
     cursor: grabbing;
   }
@@ -119,6 +135,11 @@ body {
     display: none;
     }
  }
+  .review-carousel::-webkit-scrollbar {
+    -webkit-appearance: none;
+    display: none;
+    }
+
 
 .icon-button-outline.is-disabled .icon-button-inner {
     border-color: rgba(28, 27, 31, 0.12);
@@ -143,3 +164,17 @@ body {
   .faq-item.is--expanded .faq-arrow{
   	transform: rotate(180deg);
   }
+  
+  .reviewer-quote {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+}
+
+.reviewer-quote.is--full {
+	overflow: visible;
+	-webkit-line-clamp: unset;
+}
+
+</style>
