@@ -14,6 +14,21 @@ body {
    outline-offset: 0.125rem;
 }
 
+@media screen and (max-width:1024px) and (min-width:787px) {
+  	.custom-hide {
+    	display: none;
+    }
+  }
+  .navbar_menu-wrapper.is--open .navbar_menu {
+  	transform: translate(0%, 0%);
+  }
+  .navbar_menu-wrapper.is--open .navbar_scrim {
+  	opacity: 1;
+  }
+  .no-scroll {
+    overflow: hidden;
+	}
+
 /* Get rid of top margin on first element in any rich text element */
 .w-richtext > :not(div):first-child, .w-richtext > div:first-child > :first-child {
   margin-top: 0 !important;
@@ -71,17 +86,6 @@ body {
       display: none !important;
     }
 }
-
-@media screen and (max-width:1120px) and (min-width:787px) {
-  	.custom-hide {
-    	display: none;
-    }
-  }
-  @media screen and (max-width:393px) {
-  	#bookNowNav {
-    	display: none;
-    }
-  }
   .navbar_menu-wrapper.is--open .navbar_menu {
   	transform: translate(0%, 0%);
   }
@@ -175,6 +179,42 @@ body {
 .reviewer-quote.is--full {
 	overflow: visible;
 	-webkit-line-clamp: unset;
+}
+
+.faq-rich-text .is--expanded + p {
+	height: auto;
+  padding-bottom: 1rem;
+  transform: translate(0rem,0rem);
+  opacity: 1;
+}
+.faq-rich-text h3::after {
+    content: "";
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    flex: 0 0 auto;
+    background-image: url('https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/646f932f9874c0e6e9d186d3_arrow_drop_down.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+}
+h3.is--expanded::after {
+    transform: rotate(-180deg);
+}
+.reasons-rich li::before {
+    content: ""; 
+    position: absolute;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%;
+    background-color: #dee8f5;
+    left: 0; 
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url("https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/640f5c941a61b3781ad33be5_checkmark.svg"); 
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1.3em;
 }
 
 </style>
