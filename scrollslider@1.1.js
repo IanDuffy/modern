@@ -32,7 +32,6 @@ function initSlider(slider, prevButton, nextButton) {
 
   function handleSliderScroll() {
     const { scrollLeft, clientWidth, scrollWidth } = slider;
-
     prevButton.classList.toggle("is-disabled", scrollLeft === 0);
     nextButton.classList.toggle("is-disabled", scrollLeft >= scrollWidth - clientWidth);
   }
@@ -42,21 +41,22 @@ function initSlider(slider, prevButton, nextButton) {
     const cardWidth = clientWidth / 3; // Assuming there are 3 cards per screen
     const scrollAmount = cardWidth * 2; // Scroll by two card widths
     const newScrollLeft = direction === "prev" ? scrollLeft - scrollAmount : scrollLeft + scrollAmount;
+    slider.scroll({
+      left: newScrollLeft,
+      behavior: "smooth",
+    });
+  }
 
-  slider.scroll({
-    left: newScrollLeft,
-    behavior: "smooth",
-  });
-}
-
-
-  slider.addEventListener("mousedown", handleMouseDown);
-  slider.addEventListener("mouseleave", handleMouseLeave);
-  slider.addEventListener("mouseup", handleMouseUp);
-  slider.addEventListener("mousemove", handleMouseMove);
-  prevButton.addEventListener("click", () => slide("prev"));
-  nextButton.addEventListener("click", () => slide("next"));
-  slider.addEventListener("scroll", handleSliderScroll);
+  // Only attach mousedown, mousemove, and mouseup events if viewport is wider than 992px
+  if (window.innerWidth > 992) {
+    slider.addEventListener("mousedown", handleMouseDown);
+    slider.addEventListener("mouseleave", handleMouseLeave);
+    slider.addEventListener("mouseup", handleMouseUp);
+    slider.addEventListener("mousemove", handleMouseMove);
+    prevButton.addEventListener("click", () => slide("prev"));
+    nextButton.addEventListener("click", () => slide("next"));
+    slider.addEventListener("scroll", handleSliderScroll);
+  }
 
   // Set initial button opacity
   handleSliderScroll();
