@@ -47,16 +47,13 @@ function initSlider(slider, prevButton, nextButton) {
     });
   }
 
-  // Only attach mousedown, mousemove, and mouseup events if viewport is wider than 992px
-  if (window.innerWidth > 992) {
-    slider.addEventListener("mousedown", handleMouseDown);
-    slider.addEventListener("mouseleave", handleMouseLeave);
-    slider.addEventListener("mouseup", handleMouseUp);
-    slider.addEventListener("mousemove", handleMouseMove);
-    prevButton.addEventListener("click", () => slide("prev"));
-    nextButton.addEventListener("click", () => slide("next"));
-    slider.addEventListener("scroll", handleSliderScroll);
-  }
+  slider.addEventListener("mousedown", handleMouseDown);
+  slider.addEventListener("mouseleave", handleMouseLeave);
+  slider.addEventListener("mouseup", handleMouseUp);
+  slider.addEventListener("mousemove", handleMouseMove);
+  prevButton.addEventListener("click", () => slide("prev"));
+  nextButton.addEventListener("click", () => slide("next"));
+  slider.addEventListener("scroll", handleSliderScroll);
 
   // Set initial button opacity
   handleSliderScroll();
