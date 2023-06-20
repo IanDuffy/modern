@@ -166,8 +166,6 @@ function onFilterChipClick(event) {
   const selectedLocation = event.currentTarget.textContent.trim();
   const isActive = event.currentTarget.classList.contains('active');
 
-  cardTopElement.scrollIntoView({ behavior: 'smooth' });
-
   // Toggle the 'active' class on the filter chips
   document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
   if (!isActive) {
@@ -196,6 +194,10 @@ function onFilterChipClick(event) {
     // Show the location card of the selected location
     if (locationCard) {
       locationCard.style.display = 'block';
+      // Check if the locationsWrapper element does not contain the .is--expanded class
+      if (!locationsWrapper.classList.contains("is--expanded")) {
+        cardTopElement.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
     // Set the opacity of the markers based on the selected location
