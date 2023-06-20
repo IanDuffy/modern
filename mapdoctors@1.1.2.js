@@ -2,11 +2,13 @@ var centerLat = -81.73120110017412;
 var centerLong = 28.29675612318229;
 var latitude = centerLat;
 var longitude = centerLong;
-var zoom = 7;
+var zoom = 7
+var cardTopElement = document.getElementById('cardTop');
 let ogAdd = document.querySelector('[data-text="address"]');
 let selectedAddress = '';
 let ogLocations = locationArr;
 let map;
+
 function initMap(lat, long, zoom, mapObject, selectedLocation = '') {
   mapboxgl.accessToken = 'pk.eyJ1IjoiaWR1ZmZ5IiwiYSI6ImNsZTUzZTAwZTA2cXEzd25xdDYxcTY2M3IifQ._wA9UjVFdBBYeyx30y-kVw';
   const geojson = {
@@ -164,12 +166,14 @@ function onFilterChipClick(event) {
   const selectedLocation = event.currentTarget.textContent.trim();
   const isActive = event.currentTarget.classList.contains('active');
 
+  cardTopElement.scrollIntoView({ behavior: 'smooth' });
+
   // Toggle the 'active' class on the filter chips
   document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
   if (!isActive) {
     event.currentTarget.classList.add('active');
   }
-
+  
   // Filter the locationArr for the selected location
   locationArr = ogLocations.filter(location => location.properties.message.includes(selectedLocation));
 
