@@ -3,12 +3,14 @@ function navigateRegion(e) {
     if (!e.target.hasAttribute('data-region')) return;
     const selectedRegion = e.target.dataset.region;
 
-    // Remove 'active' class from all filter buttons
-    const buttons = e.currentTarget.querySelectorAll('[data-region]');
-    buttons.forEach(button => button.classList.remove('is--active'));
+    // Remove 'active' class from all filter button parent divs
+    const buttonContainers = e.currentTarget.querySelectorAll('[data-region]');
+    buttonContainers.forEach(buttonContainer => {
+        buttonContainer.parentElement.classList.remove('is--active');
+    });
 
-    // Add 'active' class to clicked filter button
-    e.target.classList.add('is--active');
+    // Add 'active' class to clicked filter button parent div
+    e.target.parentElement.classList.add('is--active');
 
     // Only select cards within the same parent container as the clicked filter button
     const cards = e.currentTarget.querySelectorAll('.filter-card');
