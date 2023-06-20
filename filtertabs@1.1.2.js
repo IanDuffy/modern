@@ -12,13 +12,15 @@ function navigateRegion(e) {
     // Add 'active' class to clicked filter button parent div
     e.target.parentElement.classList.add('is--active');
 
-    // Only select cards within the same parent container as the clicked filter button
+    // Select all cards in the current container
     const cards = e.currentTarget.querySelectorAll('.filter-card');
 
     cards.forEach(card => {
         const regionElement = card.querySelector('.region');
         if (!regionElement) return;
-        const cardRegion = regionElement.innerHTML.toLowerCase().trim();
+        const cardRegion = regionElement.textContent.toLowerCase().trim();
+        
+        // Compare card region with selected region
         if (selectedRegion === 'all' || cardRegion === selectedRegion) {
             showParent(card);
         } else {
