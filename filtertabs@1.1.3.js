@@ -41,3 +41,12 @@ function hideParent(element) {
 document.querySelectorAll('.filter-container').forEach(container => {
     container.addEventListener('click', navigateRegion);
 });
+
+// Apply event listener to the #filterRegion button
+document.querySelector('#filterRegion').addEventListener('click', function() {
+    // Select the filter wrap
+    const filterWrap = document.querySelector('.filter-flex-wrap');
+
+    // Toggle the 'is--visible' class
+    filterWrap.classList.toggle('is--visible');
+});
