@@ -307,8 +307,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-document.querySelector('.mapboxgl-canvas').addEventListener('click', () => {
-  // Hide all location cards
-  document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
-  setMarkerOpacity('', '');
+// Apply event listener to the #filterRegion button
+document.querySelector('#filterRegion').addEventListener('click', function() {
+    // Select the filter wrap
+    const filterWrap = document.querySelector('.filter-reveal-wrap');
+
+    // Toggle the 'is--visible' class
+    filterWrap.classList.toggle('is--visible');
 });
