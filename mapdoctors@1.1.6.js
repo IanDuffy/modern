@@ -4,6 +4,7 @@ var latitude = centerLat;
 var longitude = centerLong;
 var zoom = 7
 var cardTopElement = document.getElementById('cardTop');
+var locationsWrapper = document.querySelector(".locations_card-grid-wrapper");
 let ogAdd = document.querySelector('[data-text="address"]');
 let selectedAddress = '';
 let ogLocations = locationArr;
@@ -239,7 +240,6 @@ document.querySelectorAll('.filter-chip').forEach(chip => {
 
 document.addEventListener('DOMContentLoaded', () => {
   var expandMapBtn = document.getElementById("expandMap");
-  var locationsWrapper = document.querySelector(".locations_card-grid-wrapper");
   const mapboxglMarkers = document.querySelectorAll('.mapboxgl-marker');
   
   expandMapBtn.addEventListener("click", function() {
