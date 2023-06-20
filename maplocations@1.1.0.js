@@ -3,6 +3,8 @@ var centerLong = 28.29675612318229;
 var latitude = centerLat;
 var longitude = centerLong;
 var zoom = 7;
+var cardTopElement = document.getElementById('cardTop');
+var locationsWrapper = document.querySelector(".locations_card-grid-wrapper");
 let ogAdd = document.querySelector('[data-text="address"]');
 let selectedAddress = '';
 let ogLocations = locationArr;
@@ -155,6 +157,10 @@ function onFilterChipClick(event) {
   // Show the first location card of the selected doctor
   if (firstDoctorLocationCard) {
     firstDoctorLocationCard.style.display = 'block';
+    // Check if the locationsWrapper element does not contain the .is--expanded class
+    if (!locationsWrapper.classList.contains("is--expanded")) {
+      cardTopElement.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   // Set the opacity of the markers based on the selected doctor
@@ -189,7 +195,6 @@ document.querySelectorAll('.filter-chip').forEach(chip => {
 
 document.addEventListener('DOMContentLoaded', () => {
   var expandMapBtn = document.getElementById("expandMap");
-  var locationsWrapper = document.querySelector(".locations_card-grid-wrapper");
   const mapboxglMarkers = document.querySelectorAll('.mapboxgl-marker');
   
   expandMapBtn.addEventListener("click", function() {
