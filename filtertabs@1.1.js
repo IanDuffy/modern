@@ -5,10 +5,10 @@ function navigateRegion(e) {
 
     // Remove 'active' class from all filter buttons
     const buttons = e.currentTarget.querySelectorAll('[data-region]');
-    buttons.forEach(button => button.classList.remove('active'));
+    buttons.forEach(button => button.classList.remove('is--active'));
 
     // Add 'active' class to clicked filter button
-    e.target.classList.add('active');
+    e.target.classList.add('is--active');
 
     // Only select cards within the same parent container as the clicked filter button
     const cards = e.currentTarget.querySelectorAll('.filter-card');
