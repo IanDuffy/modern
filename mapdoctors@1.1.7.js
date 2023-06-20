@@ -293,7 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
       expandMapBtn.innerHTML = "Collapse";
       map.resize();
     }
-
     if (message) {
       const drEl = Array.from(document.querySelectorAll('[data-text="location"]'))
         .find(el => el.textContent.includes(message))
@@ -303,7 +302,16 @@ document.addEventListener('DOMContentLoaded', () => {
         marker.style.zIndex = 99999;
       }
     }
+  
+    // Find the corresponding location data for the clicked marker
+    const selectedLocationData = locationArr.find(x => x && x.properties && x.properties.message === message);
+  
+    // If the location data exists, recenter the map to this location
+    if (selectedLocationData && selectedLocationData.geometry) {
+      map.flyTo({ center: selectedLocationData.geometry.coordinates, zoom: 14 });
+    }
   }
+  
   mapboxglMarkers.forEach((marker) => {
     marker.addEventListener('click', onMarkerClick);
   });
