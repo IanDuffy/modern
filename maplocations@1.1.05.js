@@ -104,22 +104,23 @@ function zoomToDoctorLocations(map, doctorCoordinates) {
 }
 
 
-function setMarkerOpacity(selectedDoctor, selectedMarkerMessage, selectedMarker = null) {
-  const markers = document.querySelectorAll('.marker');
-  markers.forEach((marker) => {
-    // Always remove the marker-selected class
-    marker.classList.remove('marker-selected');
+function setMarkerOpacity(doctorName, selectedLocation, selectedMarker = null) {
+  document.querySelectorAll(".marker").forEach((marker) => {
+    marker.classList.remove("marker-selected");
 
-    if (selectedDoctor !== '' && marker.dataset.message.startsWith(selectedDoctor)) {
-      if (marker.dataset.message === selectedMarkerMessage) {
-        marker.classList.add('marker-selected');
-      }
-    } else if (selectedMarker && marker === selectedMarker) {
-      // Add the marker-selected class if a selectedMarker is provided
-      marker.classList.add('marker-selected');
-    } else if (selectedMarkerMessage && marker.dataset.message === selectedMarkerMessage) {
-      // Add the marker-selected class based on the selectedMarkerMessage
-      marker.classList.add('marker-selected');
+    // If a doctor is selected, add the marker-selected class to all markers for that doctor
+    if (doctorName !== "" && marker.dataset.message.startsWith(doctorName)) {
+      marker.classList.add("marker-selected");
+    }
+
+    // If a specific location is selected, add the marker-selected class to the marker for that location
+    if (selectedLocation && marker.dataset.message === selectedLocation) {
+      marker.classList.add("marker-selected");
+    }
+
+    // If a specific marker is selected, add the marker-selected class to that marker
+    if (selectedMarker && marker === selectedMarker) {
+      marker.classList.add("marker-selected");
     }
   });
 }
@@ -254,10 +255,4 @@ document.addEventListener('DOMContentLoaded', () => {
   resetZoomBtn.addEventListener('click', () => {
     map.flyTo({ center: [centerLat, centerLong], zoom: 9 });
   });
-});
-
-document.querySelector('.mapboxgl-canvas').addEventListener('click', () => {
-  // Hide all location cards
-  document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
-  setMarkerOpacity('', '');
 });
