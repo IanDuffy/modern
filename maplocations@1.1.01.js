@@ -80,8 +80,8 @@ doctorLocations.forEach(function (e) {
 });
 
 function zoomToDoctorLocations(map, doctorCoordinates) {
+  console.log(doctorCoordinates); // Add this line
   const bounds = new mapboxgl.LngLatBounds();
-
   if (doctorCoordinates.length === 1) {
     map.setCenter(doctorCoordinates[0]);
     map.setZoom(18);
