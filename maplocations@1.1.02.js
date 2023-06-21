@@ -80,16 +80,20 @@ doctorLocations.forEach(function (e) {
 });
 
 function zoomToDoctorLocations(map, doctorCoordinates) {
-  console.log(doctorCoordinates); // Add this line
-  const bounds = new mapboxgl.LngLatBounds();
   if (doctorCoordinates.length === 1) {
     map.setCenter(doctorCoordinates[0]);
     map.setZoom(18);
   } else {
-    doctorCoordinates.forEach(coord => bounds.extend(coord));
+    const bounds = new mapboxgl.LngLatBounds(doctorCoordinates[0], doctorCoordinates[0]);
+    doctorCoordinates.forEach(coord => {
+      if (Array.isArray(coord) && coord.length === 2 && !isNaN(coord[0]) && !isNaN(coord[1])) {
+        bounds.extend(coord);
+      }
+    });
     map.fitBounds(bounds, { padding: { top: 50, bottom: 50, left: window.innerWidth / 3, right: 50 }, maxZoom: 12 });
   }
 }
+
 
 function setMarkerOpacity(selectedDoctor, selectedMarkerMessage, selectedMarker = null) {
   const markers = document.querySelectorAll('.marker');
