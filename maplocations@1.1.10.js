@@ -163,7 +163,7 @@ function onFilterChipClick(event) {
   // Find the first matching location card for the selected doctor
   const firstDoctorLocationCard = locationArr.length > 0 ? Array.from(document.querySelectorAll('[data-text="location"]'))
     .find(el => el.textContent.includes(locationArr[0].properties.message))
-    .closest('.location--card-item') : null;
+    .parentNode.parentNode : null; // Use .parentNode.parentNode to get the .location--card-item element
 
   // Hide all location cards
   document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
