@@ -80,25 +80,23 @@ doctorLocations.forEach(function (e) {
 });
 
 function zoomToDoctorLocations(map, doctorCoordinates) {
-  // Check if doctorCoordinates is an array and is not empty
+  // Check if the map is expanded
+  var isExpanded = locationsWrapper.classList.contains('is--expanded');
+
   if (Array.isArray(doctorCoordinates) && doctorCoordinates.length > 0) {
-    // Check if the first coordinate is valid
-    if (Array.isArray(doctorCoordinates[0]) && doctorCoordinates[0].length === 2 && !isNaN(doctorCoordinates[0][0]) && !isNaN(doctorCoordinates[0][1])) {
-      if (doctorCoordinates.length === 1) {
-        map.setCenter(doctorCoordinates[0]);
-        map.setZoom(18);
-      } else {
-        const bounds = new mapboxgl.LngLatBounds(doctorCoordinates[0], doctorCoordinates[0]);
-        doctorCoordinates.forEach(coord => {
-          // Check if the coordinate is valid before extending the bounds
-          if (Array.isArray(coord) && coord.length === 2 && !isNaN(coord[0]) && !isNaN(coord[1])) {
-            bounds.extend(coord);
-          }
-        });
-        map.fitBounds(bounds, { padding: { top: 50, bottom: 50, left: window.innerWidth / 3, right: 50 }, maxZoom: 12 });
-      }
-    } else {
+    if (!Array.isArray(doctorCoordinates[0]) || 2 !== doctorCoordinates[0].length || isNaN(doctorCoordinates[0][0]) || isNaN(doctorCoordinates[0][1])) {
       console.error('Invalid coordinate:', doctorCoordinates[0]);
+    } else if (1 === doctorCoordinates.length) {
+      map.setCenter(doctorCoordinates[0]);
+      map.setZoom(18);
+    } else if (isExpanded) { // Only call fitBounds if the map is expanded
+      const bounds = new mapboxgl.LngLatBounds(doctorCoordinates[0], doctorCoordinates[0]);
+      doctorCoordinates.forEach(coord => {
+        if (Array.isArray(coord) && coord.length === 2 && !isNaN(coord[0]) && !isNaN(coord[1])) {
+          bounds.extend(coord);
+        }
+      });
+      map.fitBounds(bounds, { padding: { top: 50, bottom: 50, left: window.innerWidth / 3, right: 50 }, maxZoom: 12 });
     }
   } else {
     console.error('Invalid doctorCoordinates:', doctorCoordinates);
