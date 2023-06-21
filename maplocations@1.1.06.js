@@ -104,7 +104,7 @@ function zoomToDoctorLocations(map, doctorCoordinates) {
 }
 
 
-function setMarkerOpacity(doctorName, selectedLocation, selectedMarker = null) {
+function setMarkerOpacity(doctorName) {
   document.querySelectorAll(".marker").forEach((marker) => {
     marker.classList.remove("marker-selected");
 
@@ -112,18 +112,25 @@ function setMarkerOpacity(doctorName, selectedLocation, selectedMarker = null) {
     if (doctorName !== "" && marker.dataset.message.startsWith(doctorName)) {
       marker.classList.add("marker-selected");
     }
+  });
+}
 
-    // If a specific location is selected, add the marker-selected class to the marker for that location
-    if (selectedLocation && marker.dataset.message === selectedLocation) {
-      marker.classList.add("marker-selected");
+function showLocationCards(doctorName, selectedLocation) {
+  document.querySelectorAll(".location--card-item").forEach((card) => {
+    card.style.display = "none";
+
+    // If a doctor is selected, show all location cards for that doctor
+    if (doctorName !== "" && card.dataset.message.startsWith(doctorName)) {
+      card.style.display = "block";
     }
 
-    // If a specific marker is selected, add the marker-selected class to that marker
-    if (selectedMarker && marker === selectedMarker) {
-      marker.classList.add("marker-selected");
+    // If a specific location is selected, show the location card for that location
+    if (selectedLocation && card.dataset.message === selectedLocation) {
+      card.style.display = "block";
     }
   });
 }
+
 
 // Add this function to handle the click event on the filter chips
 function onFilterChipClick(event) {
