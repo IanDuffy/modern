@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (locationsWrapper.classList.contains("is--expanded")) {
       expandMapBtn.innerHTML = "Minimize";
     } else {
-      expandMapBtn.innerHTML = "Show Map";
+      expandMapBtn.innerHTML = "Expand Map";
     }
     map.resize();
     map.flyTo({ center: [centerLat, centerLong], zoom: 9 });
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (!locationsWrapper.classList.contains("is--expanded")) {
       locationsWrapper.classList.add("is--expanded");
-      expandMapBtn.innerHTML = "Collapse";
+      expandMapBtn.innerHTML = "Minimize";
       map.resize();
     }
 
