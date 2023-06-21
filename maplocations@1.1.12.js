@@ -38,17 +38,28 @@ function initMap(lat, long, zoom, mapObject, selectedDoctor = '') {
     el.dataset.message = marker.properties.message;
     el.addEventListener('click', (e) => {
       document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
-
       if (marker.properties.message) {
-        const drEl = Array.from(document.querySelectorAll('[data-text="location"]'))
-          .find(el => el.textContent.includes(marker.properties.message))
-          .closest('.location--card-item');
-        drEl.style.display = 'block';
-        // Zoom in to the selected marker
-    map.flyTo({ center: marker.geometry.coordinates, zoom: 14 });
+        // Log the marker message
+        console.log('Marker message:', marker.properties.message);
+    
+        // Log the text content of all data-text="location" elements
+        Array.from(document.querySelectorAll('[data-text=\"location\"]')).forEach(el => {
+          console.log('Location element text:', el.textContent);
+        });
+    
+        const locationElement = Array.from(document.querySelectorAll('[data-text=\"location\"]'))
+          .find(el => el.textContent.includes(marker.properties.message));
+    
+        if (locationElement) {
+          const drEl = locationElement.closest('.location--card-item');
+          drEl.style.display = 'block';
+          // Zoom in to the selected marker
+          map.flyTo({ center: marker.geometry.coordinates, zoom: 14 });
+        }
       }
       setMarkerOpacity(selectedDoctor, marker.properties.message, el);
     });
+
     new mapboxgl.Marker(el)
       .setLngLat(marker.geometry.coordinates)
       .addTo(mapObject);
