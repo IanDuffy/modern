@@ -104,7 +104,7 @@ function zoomToDoctorLocations(map, doctorCoordinates) {
 }
 
 
-function setMarkerOpacity(doctorName) {
+function setMarkerOpacity(doctorName, selectedLocation, selectedMarker = null) {
   document.querySelectorAll(".marker").forEach((marker) => {
     marker.classList.remove("marker-selected");
 
@@ -112,39 +112,35 @@ function setMarkerOpacity(doctorName) {
     if (doctorName !== "" && marker.dataset.message.startsWith(doctorName)) {
       marker.classList.add("marker-selected");
     }
-  });
-}
 
-function showLocationCards(doctorName, selectedLocation) {
-  document.querySelectorAll(".location--card-item").forEach((card) => {
-    card.style.display = "none";
-
-    // If a doctor is selected, show all location cards for that doctor
-    if (doctorName !== "" && card.dataset.message.startsWith(doctorName)) {
-      card.style.display = "block";
+    // If a specific location is selected, add the marker-selected class to the marker for that location
+    if (selectedLocation && marker.dataset.message === selectedLocation) {
+      marker.classList.add("marker-selected");
     }
 
-    // If a specific location is selected, show the location card for that location
-    if (selectedLocation && card.dataset.message === selectedLocation) {
-      card.style.display = "block";
+    // If a specific marker is selected, add the marker-selected class to that marker
+    if (selectedMarker && marker === selectedMarker) {
+      marker.classList.add("marker-selected");
     }
   });
 }
-
 
 // Add this function to handle the click event on the filter chips
 function onFilterChipClick(event) {
   const selectedDoctor = event.currentTarget.textContent.trim();
   const isActive = event.currentTarget.classList.contains('active');
+
   // Toggle the 'active' class on the filter chips
   document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
   if (!isActive) {
     event.currentTarget.classList.add('active');
   }
+
   if (selectedDoctor) {
     latitude = centerLat;
     longitude = centerLong;
     zoom = 8;
+
     var doctorFilteredLocation = [];
     doctorLocations.filter(x => x['doctor name'].includes(selectedDoctor)).forEach(function (x) {
       doctorFilteredLocation.push(ogLocations.filter(y => y.properties.message.includes(x.location))[0]);
@@ -157,17 +153,21 @@ function onFilterChipClick(event) {
     locationArr = ogLocations;
   }
   initMap(latitude, longitude, zoom, map, selectedDoctor); // Pass the map object
+
   // Zoom in and set bounds around the doctor's location(s)
   const doctorCoordinates = locationArr.map(location => location.geometry.coordinates);
   if (doctorCoordinates.length > 0) {
     zoomToDoctorLocations(map, doctorCoordinates);
   }
+
   // Find the first matching location card for the selected doctor
   const firstDoctorLocationCard = locationArr.length > 0 ? Array.from(document.querySelectorAll('[data-text="location"]'))
     .find(el => el.textContent.includes(locationArr[0].properties.message))
     .closest('.location--card-item') : null;
+
   // Hide all location cards
   document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
+
   // Show the first location card of the selected doctor
   if (firstDoctorLocationCard) {
     firstDoctorLocationCard.style.display = 'block';
@@ -176,12 +176,30 @@ function onFilterChipClick(event) {
       cardTopElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
-  // Set the opacity of the markers based on the selected doctor
-  setMarkerOpacity(selectedDoctor);
-  // Show the location cards for the selected doctor
-  showLocationCards(selectedDoctor, firstDoctorLocationCard ? firstDoctorLocationCard.dataset.message : '');
-}
 
+  // Set the opacity of the markers based on the selected doctor
+  const selectedMarkerMessage = firstDoctorLocationCard
+    ? firstDoctorLocationCard.querySelector('[data-text="location"]').textContent
+    : '';
+  if (isActive) {
+    setMarkerOpacity('', selectedMarkerMessage);
+  } else {
+    setMarkerOpacity(selectedDoctor, selectedMarkerMessage); // Use selectedDoctor instead of markerDoctor
+  }
+
+  // Update the selected marker
+  const firstDoctorLocationMessage = firstDoctorLocationCard
+    ? firstDoctorLocationCard.querySelector('[data-text="location"]').textContent
+    : '';
+  if (firstDoctorLocationMessage) {
+    const firstDoctorMarker = Array.from(document.querySelectorAll('.marker')).find(
+      (marker) => marker.dataset.message === firstDoctorLocationMessage
+    );
+    if (firstDoctorMarker) {
+      setMarkerOpacity(selectedDoctor, firstDoctorLocationMessage, firstDoctorMarker);
+    }
+  }
+}
 
 // Add event listeners to the filter chips
 document.querySelectorAll('.filter-chip').forEach(chip => {
