@@ -267,3 +267,12 @@ document.addEventListener('DOMContentLoaded', () => {
     map.flyTo({ center: [centerLat, centerLong], zoom: 9 });
   });
 });
+
+// Apply event listener to the #filterRegion button
+document.querySelector('#filterRegion').addEventListener('click', function() {
+    // Select the filter wrap
+    const filterWrap = document.querySelector('.filter-reveal-wrap');
+
+    // Toggle the 'is--visible' class
+    filterWrap.classList.toggle('is--visible');
+});
