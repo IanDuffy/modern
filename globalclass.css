@@ -206,7 +206,4 @@ h3.is--expanded::after {
     background-position: center;
     background-size: 1.3em;
 }
-.navbar.is--hidden .book-now--nav-button{
-	display: none;
-}
 </style>

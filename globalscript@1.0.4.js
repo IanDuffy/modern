@@ -7,6 +7,33 @@ var pageWrapper = document.querySelector('.page-wrapper');
 var footer = document.querySelector('.footer');
 var windowHeight = window.innerHeight;
 
+document.addEventListener("DOMContentLoaded", function() {
+  var scheduleButton = document.querySelector('.schedule-button');
+  var fixedFab = document.querySelector('.fixed-fab');
+
+  var isFixedFabVisible = true; // Initially visible
+
+  if (scheduleButton) {
+    fixedFab.style.display = 'none';
+    isFixedFabVisible = false;
+
+    window.addEventListener('scroll', function() {
+      // Calculate the position of scheduleButton halfway up the screen
+      var halfScreenPosition = window.pageYOffset + window.innerHeight / 2;
+      
+      var scheduleButtonPosition = scheduleButton.getBoundingClientRect().top + window.pageYOffset;
+
+      if (!isFixedFabVisible && halfScreenPosition >= scheduleButtonPosition) {
+        fixedFab.style.display = 'block';
+        isFixedFabVisible = true;
+      } else if (isFixedFabVisible && halfScreenPosition < scheduleButtonPosition) {
+        fixedFab.style.display = 'none';
+        isFixedFabVisible = false;
+      }
+    });
+  }
+});
+
 // Event listener for the menu button
 menuOpenButton.addEventListener('click', function() {
     // Make the menu wrapper visible
