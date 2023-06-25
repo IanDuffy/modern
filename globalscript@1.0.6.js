@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var isFixedFabVisible = true; // Initially visible
 
   if (scheduleButton) {
-    fixedFab.classList.remove('is--visible');
+    fixedFab.classList.add('is--hidden');
     isFixedFabVisible = false;
 
     window.addEventListener('scroll', function() {
@@ -24,10 +24,12 @@ document.addEventListener("DOMContentLoaded", function() {
       var scheduleButtonPosition = scheduleButton.getBoundingClientRect().top + window.pageYOffset;
 
       if (!isFixedFabVisible && halfScreenPosition >= scheduleButtonPosition) {
+        fixedFab.classList.remove('is--hidden');
         fixedFab.classList.add('is--visible');
         isFixedFabVisible = true;
       } else if (isFixedFabVisible && halfScreenPosition < scheduleButtonPosition) {
         fixedFab.classList.remove('is--visible');
+        fixedFab.classList.add('is--hidden');
         isFixedFabVisible = false;
       }
     });
