@@ -74,3 +74,22 @@ function throttle(func, limit) {
         }
     }
 }
+
+	document.addEventListener("DOMContentLoaded", function() {
+  var scheduleButton = document.querySelector('.schedule-button');
+  var fixedFab = document.querySelector('.fixed-fab');
+
+  if (scheduleButton) {
+    window.addEventListener('scroll', function() {
+      // Calculate the position of scheduleButton halfway up the screen
+      var halfScreenPosition = window.pageYOffset + window.innerHeight / 2;
+      var scheduleButtonPosition = scheduleButton.getBoundingClientRect().top + window.pageYOffset;
+
+      if (halfScreenPosition >= scheduleButtonPosition) {
+        fixedFab.classList.add('is--visible');
+      } else {
+        fixedFab.classList.remove('is--visible');
+      }
+    });
+  }
+});
