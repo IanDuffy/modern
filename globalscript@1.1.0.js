@@ -76,16 +76,17 @@ function throttle(func, limit) {
 }
 
 	document.addEventListener("DOMContentLoaded", function() {
-  var scheduleButton = document.querySelector('.schedule-button');
+  var hideFabElement = document.getElementById('hideFab');
   var fixedFab = document.querySelector('.fixed-fab');
 
-  if (scheduleButton) {
+  // Only add the scroll listener if #hideFab is present
+  if (hideFabElement) {
     window.addEventListener('scroll', function() {
-      // Calculate the position of scheduleButton halfway up the screen
+      // Calculate the position of #hideFab halfway up the screen
       var halfScreenPosition = window.pageYOffset + window.innerHeight / 2;
-      var scheduleButtonPosition = scheduleButton.getBoundingClientRect().top + window.pageYOffset;
+      var hideFabElementPosition = hideFabElement.getBoundingClientRect().top + window.pageYOffset;
 
-      if (halfScreenPosition >= scheduleButtonPosition) {
+      if (halfScreenPosition >= hideFabElementPosition) {
         fixedFab.classList.add('is--visible');
       } else {
         fixedFab.classList.remove('is--visible');
