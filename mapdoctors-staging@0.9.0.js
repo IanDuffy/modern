@@ -85,7 +85,7 @@ function initMap(mapObject, selectedLocation = '') {
                   selectedBounds.extend(feature.geometry.coordinates);
                 });
               selectedBounds.extend(event.result.geometry.coordinates);
-              mapObject.fitBounds(selectedBounds.toArray(), { padding: paddingSm });
+              mapObject.fitBounds(selectedBounds.toArray(), { padding: paddingLg });
             }
           } else {
             // If no filter is active, center the map to the new point and set the zoom level to 10
@@ -162,7 +162,7 @@ function initMap(mapObject, selectedLocation = '') {
         document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
         setMarkerOpacity('', '');
         // Zoom back out when closing the card
-        map.fitBounds(bounds.toArray(), { padding: paddingSm });
+        map.fitBounds(bounds.toArray(), { padding: paddingLg });
       });
     });
   });
@@ -255,7 +255,7 @@ function onFilterChipClick(event) {
   } else {
     // If no location is selected, reset the locationArr and zoom out
     locationArr = ogLocations;
-    map.fitBounds(bounds.toArray(), { padding: paddingSm });
+    map.fitBounds(bounds.toArray(), { padding: paddingLg });
   }
 }
 
