@@ -82,8 +82,8 @@ function initMap(mapObject, selectedLocation = '') {
               mapObject.fitBounds(selectedBounds.toArray(), { padding: 20 });
             }
           } else {
-            // If no filter is active, center the map to the new point
-            mapObject.flyTo({ center: event.result.geometry.coordinates });
+            // If no filter is active, center the map to the new point and set the zoom level to 10
+            mapObject.flyTo({ center: event.result.geometry.coordinates, zoom: 10 });
           }
         });
       });
