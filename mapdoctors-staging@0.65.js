@@ -129,7 +129,7 @@ function initMap(mapObject, selectedLocation = '') {
         document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
         setMarkerOpacity('', '');
         // Zoom back out when closing the card
-        map.fitBounds(bounds.toArray(), { padding: 20 });
+        map.fitBounds(bounds.toArray(), { padding: 40 });
       });
     });
   });
@@ -222,7 +222,7 @@ function onFilterChipClick(event) {
   } else {
     // If no location is selected, reset the locationArr and zoom out
     locationArr = ogLocations;
-    map.fitBounds(bounds.toArray(), { padding: 20 });
+    map.fitBounds(bounds.toArray(), { padding: 40 });
   }
 }
 
@@ -261,11 +261,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedLocationData = locationArr.find(x => x && x.properties && x.properties.message.includes(selectedLocation));
         // If the location data exists, recenter the map to this location
         if (selectedLocationData && selectedLocationData.geometry) {
-          map.flyTo({ center: selectedLocationData.geometry.coordinates });
+          map.flyTo({ center: selectedLocationData.geometry.coordinates, zoom: 14 });
         }
       } else {
         // If no filter is active, recenter the map to the original center
-        map.fitBounds(bounds.toArray(), { padding: 20 });
+        map.fitBounds(bounds.toArray(), { padding: 40 });
       }
     }, 200); // Wait 200 milliseconds before resizing and recentering
   });
@@ -303,8 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedLocationData = locationArr.find(x => x && x.properties && x.properties.message === message);
   
     // If the location data exists, recenter the map to this location
-    if (selectedLocationData && selectedLocationData.geometry) {
-      map.flyTo({ center: selectedLocationData.geometry.coordinates });
+     if (selectedLocationData && selectedLocationData.geometry) {
+      map.flyTo({ center: selectedLocationData.geometry.coordinates, zoom: 14 });
     }
   }
   
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   const resetZoomBtn = document.getElementById("resetZoomBtn");
   resetZoomBtn.addEventListener('click', () => {
-    map.fitBounds(bounds.toArray(), { padding: 20 });
+    map.fitBounds(bounds.toArray(), { padding: 40 });
   });
 });
 
