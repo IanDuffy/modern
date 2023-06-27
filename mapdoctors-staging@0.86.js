@@ -146,6 +146,8 @@ function initMap(mapObject, selectedLocation = '') {
     new mapboxgl.Marker(el)
       .setLngLat(marker.geometry.coordinates)
       .addTo(mapObject);
+    // Fit bounds after all markers have been added
+    mapObject.fitBounds(bounds.toArray(), { padding: 25 });
   }
   
   mapObject.on('load', () => {
