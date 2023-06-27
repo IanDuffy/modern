@@ -1,29 +1,29 @@
-var centerLat = -81.73120110017412;
-var centerLong = 28.29675612318229;
-var latitude = centerLat;
-var longitude = centerLong;
-var zoom = 7
 var cardTopElement = document.getElementById('cardTop');
 var locationsWrapper = document.querySelector(".locations_card-grid-wrapper");
 let ogAdd = document.querySelector('[data-text="address"]');
 let selectedAddress = '';
 let ogLocations = locationArr;
 let map;
+let bounds;
 
-function initMap(lat, long, zoom, mapObject, selectedLocation = '') {
+function initMap(mapObject, selectedLocation = '') {
   mapboxgl.accessToken = 'pk.eyJ1IjoiaWR1ZmZ5IiwiYSI6ImNsZTUzZTAwZTA2cXEzd25xdDYxcTY2M3IifQ._wA9UjVFdBBYeyx30y-kVw';
   const geojson = {
     'type': 'FeatureCollection',
     'features': locationArr
   };
 
+  bounds = new mapboxgl.LngLatBounds();
+    geojson.features.forEach(feature => {
+      bounds.extend(feature.geometry.coordinates);
+    });
+
   if (!mapObject) {
-    mapObject = new mapboxgl.Map({
+   mapObject = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/iduffy/clhget0j8003001qs9jwj4m82',
-      center: [lat, long],
-      zoom: zoom
-      });
+      bounds: bounds.toArray()
+    });
     
       const geocoder = new MapboxGeocoder({
         // Initialize the geocoder
@@ -32,10 +32,6 @@ function initMap(lat, long, zoom, mapObject, selectedLocation = '') {
         marker: false, // Do not use the default marker style
         placeholder: 'Search for address', // Placeholder text for the search bar
         bbox: [], // Add a boundary if needed
-        proximity: {
-          longitude: long,
-          latitude: lat
-        } // Set the proximity to the current center of the map
       });
   
       // Add the geocoder to the map
@@ -67,6 +63,28 @@ function initMap(lat, long, zoom, mapObject, selectedLocation = '') {
         // Add a marker at the result's coordinates
         geocoder.on('result', (event) => {
           mapObject.getSource('single-point').setData(event.result.geometry);
+        
+          // Check if a filter is active
+          const activeFilterChip = Array.from(document.querySelectorAll('.filter-chip')).find(chip => chip.classList.contains('active'));
+          if (activeFilterChip) {
+            // If a filter is active, find the corresponding location
+            const selectedLocation = activeFilterChip.textContent.trim();
+            const selectedLocationData = locationArr.find(x => x && x.properties && x.properties.message.includes(selectedLocation));
+            // If the location data exists, calculate the bounds of the selected location and the new point
+            if (selectedLocationData && selectedLocationData.geometry) {
+              let selectedBounds = new mapboxgl.LngLatBounds();
+              geojson.features
+                .filter(feature => feature.properties.message === selectedLocationData.properties.message)
+                .forEach(feature => {
+                  selectedBounds.extend(feature.geometry.coordinates);
+                });
+              selectedBounds.extend(event.result.geometry.coordinates);
+              mapObject.fitBounds(selectedBounds.toArray(), { padding: 20 });
+            }
+          } else {
+            // If no filter is active, center the map to the new point
+            mapObject.flyTo({ center: event.result.geometry.coordinates });
+          }
         });
       });
   
@@ -74,7 +92,7 @@ function initMap(lat, long, zoom, mapObject, selectedLocation = '') {
       const geocoderContainer = document.querySelector('.mapboxgl-ctrl-geocoder');
       geocoderContainer.classList.add('hidden-geocoder');
     } else {
-      mapObject.jumpTo({ center: [lat, long], zoom: zoom });
+      mapObject.jumpTo({ bounds: bounds.toArray(), });
     }
   	
   for (const marker of geojson.features) {
@@ -133,14 +151,14 @@ function initMap(lat, long, zoom, mapObject, selectedLocation = '') {
         document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
         setMarkerOpacity('', '');
         // Zoom back out when closing the card
-        map.flyTo({ center: [centerLat, centerLong], zoom: 9 });
+        map.fitBounds(bounds.toArray(), { padding: 40 });
       });
     });
   });
   return mapObject;
 }
 
-map = initMap(latitude, longitude, zoom, null, '');
+map = initMap(null, '');
 
 function setMarkerOpacity(selectedLocation, selectedMarkerMessage, selectedMarker = null) {
   const markers = document.querySelectorAll('.marker');
@@ -182,7 +200,7 @@ function onFilterChipClick(event) {
     const locationCoordinates = locationArr[0].geometry.coordinates;
 
     // Zoom into the selected location
-    map.flyTo({ center: locationCoordinates, zoom: 14 });
+    map.flyTo({ center: locationCoordinates });
 
     // Find the matching location card for the selected location
     const locationCard = Array.from(document.querySelectorAll('[data-text="location"]'))
@@ -226,7 +244,7 @@ function onFilterChipClick(event) {
   } else {
     // If no location is selected, reset the locationArr and zoom out
     locationArr = ogLocations;
-    map.flyTo({ center: [centerLat, centerLong], zoom: 9 });
+    map.fitBounds(bounds.toArray(), { padding: 40 });
   }
 }
 
@@ -269,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else {
         // If no filter is active, recenter the map to the original center
-        map.flyTo({ center: [centerLat, centerLong], zoom: 9 });
+        map.fitBounds(bounds.toArray(), { padding: 40 });
       }
     }, 200); // Wait 200 milliseconds before resizing and recentering
   });
@@ -307,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedLocationData = locationArr.find(x => x && x.properties && x.properties.message === message);
   
     // If the location data exists, recenter the map to this location
-    if (selectedLocationData && selectedLocationData.geometry) {
+     if (selectedLocationData && selectedLocationData.geometry) {
       map.flyTo({ center: selectedLocationData.geometry.coordinates, zoom: 14 });
     }
   }
@@ -317,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   const resetZoomBtn = document.getElementById("resetZoomBtn");
   resetZoomBtn.addEventListener('click', () => {
-    map.flyTo({ center: [centerLat, centerLong], zoom: 9 });
+    map.fitBounds(bounds.toArray(), { padding: 40 });
   });
 });
 
