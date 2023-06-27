@@ -83,7 +83,7 @@ function initMap(mapObject, selectedLocation = '') {
             }
           } else {
             // If no filter is active, center the map to the new point and set the zoom level to 10
-            mapObject.flyTo({ center: event.result.geometry.coordinates, zoom: 10 });
+            mapObject.flyTo({ center: event.result.geometry.coordinates, zoom: 12 });
           }
         });
       });
