@@ -70,7 +70,7 @@ function initMap(mapObject, selectedLocation = '') {
             // If a filter is active, find the corresponding location
             const selectedLocation = activeFilterChip.textContent.trim();
             const selectedLocationData = locationArr.find(x => x && x.properties && x.properties.message.includes(selectedLocation));
-            // If the location data exists, recenter the map to this location
+            // If the location data exists, calculate the bounds of the selected location and the new point
             if (selectedLocationData && selectedLocationData.geometry) {
               let selectedBounds = new mapboxgl.LngLatBounds();
               geojson.features
@@ -78,11 +78,12 @@ function initMap(mapObject, selectedLocation = '') {
                 .forEach(feature => {
                   selectedBounds.extend(feature.geometry.coordinates);
                 });
+              selectedBounds.extend(event.result.geometry.coordinates);
               mapObject.fitBounds(selectedBounds.toArray(), { padding: 20 });
             }
           } else {
-            // If no filter is active, recenter the map to the original center
-            mapObject.fitBounds(bounds.toArray(), { padding: 20 });
+            // If no filter is active, center the map to the new point
+            mapObject.flyTo({ center: event.result.geometry.coordinates });
           }
         });
       });
