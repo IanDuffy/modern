@@ -63,6 +63,27 @@ function initMap(mapObject, selectedLocation = '') {
         // Add a marker at the result's coordinates
         geocoder.on('result', (event) => {
           mapObject.getSource('single-point').setData(event.result.geometry);
+        
+          // Check if a filter is active
+          const activeFilterChip = Array.from(document.querySelectorAll('.filter-chip')).find(chip => chip.classList.contains('active'));
+          if (activeFilterChip) {
+            // If a filter is active, find the corresponding location
+            const selectedLocation = activeFilterChip.textContent.trim();
+            const selectedLocationData = locationArr.find(x => x && x.properties && x.properties.message.includes(selectedLocation));
+            // If the location data exists, recenter the map to this location
+            if (selectedLocationData && selectedLocationData.geometry) {
+              let selectedBounds = new mapboxgl.LngLatBounds();
+              geojson.features
+                .filter(feature => feature.properties.message === selectedLocationData.properties.message)
+                .forEach(feature => {
+                  selectedBounds.extend(feature.geometry.coordinates);
+                });
+              mapObject.fitBounds(selectedBounds.toArray(), { padding: 20 });
+            }
+          } else {
+            // If no filter is active, recenter the map to the original center
+            mapObject.fitBounds(bounds.toArray(), { padding: 20 });
+          }
         });
       });
   
