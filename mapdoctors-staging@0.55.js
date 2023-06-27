@@ -4,6 +4,7 @@ let ogAdd = document.querySelector('[data-text="address"]');
 let selectedAddress = '';
 let ogLocations = locationArr;
 let map;
+let bounds;
 
 function initMap(mapObject, selectedLocation = '') {
   mapboxgl.accessToken = 'pk.eyJ1IjoiaWR1ZmZ5IiwiYSI6ImNsZTUzZTAwZTA2cXEzd25xdDYxcTY2M3IifQ._wA9UjVFdBBYeyx30y-kVw';
@@ -12,10 +13,10 @@ function initMap(mapObject, selectedLocation = '') {
     'features': locationArr
   };
 
-  let bounds = new mapboxgl.LngLatBounds();
-  geojson.features.forEach(feature => {
-    bounds.extend(feature.geometry.coordinates);
-  });
+  bounds = new mapboxgl.LngLatBounds();
+    geojson.features.forEach(feature => {
+      bounds.extend(feature.geometry.coordinates);
+    });
 
   if (!mapObject) {
    mapObject = new mapboxgl.Map({
