@@ -5,6 +5,7 @@ let selectedAddress = '';
 let ogLocations = locationArr;
 let map;
 let bounds;
+let padding = 24;
 
 
 function initMap(mapObject, selectedLocation = '') {
@@ -80,7 +81,7 @@ function initMap(mapObject, selectedLocation = '') {
                   selectedBounds.extend(feature.geometry.coordinates);
                 });
               selectedBounds.extend(event.result.geometry.coordinates);
-              mapObject.fitBounds(selectedBounds.toArray(), { padding: 100 });
+              mapObject.fitBounds(selectedBounds.toArray(), { padding: padding });
             }
           } else {
             // If no filter is active, center the map to the new point and set the zoom level to 10
@@ -88,7 +89,7 @@ function initMap(mapObject, selectedLocation = '') {
             mapObject.setZoom(12);
           }
         });
-        mapObject.fitBounds(bounds.toArray(), { padding: 25 });
+        mapObject.fitBounds(bounds.toArray(), { padding: padding });
       });
   
       // Hide the geocoder by default
@@ -147,7 +148,7 @@ function initMap(mapObject, selectedLocation = '') {
       .setLngLat(marker.geometry.coordinates)
       .addTo(mapObject);
     // Fit bounds after all markers have been added
-    mapObject.fitBounds(bounds.toArray(), { padding: 25 });
+    mapObject.fitBounds(bounds.toArray(), { padding: padding });
   }
   
   mapObject.on('load', () => {
@@ -157,7 +158,7 @@ function initMap(mapObject, selectedLocation = '') {
         document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
         setMarkerOpacity('', '');
         // Zoom back out when closing the card
-        map.fitBounds(bounds.toArray(), { padding: 100 });
+        map.fitBounds(bounds.toArray(), { padding: padding });
       });
     });
   });
@@ -250,7 +251,7 @@ function onFilterChipClick(event) {
   } else {
     // If no location is selected, reset the locationArr and zoom out
     locationArr = ogLocations;
-    map.fitBounds(bounds.toArray(), { padding: 100 });
+    map.fitBounds(bounds.toArray(), { padding: padding });
   }
 }
 
@@ -293,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else {
         // If no filter is active, recenter the map to the original center
-        map.fitBounds(bounds.toArray(), { padding: 100 });
+        map.fitBounds(bounds.toArray(), { padding: padding });
       }
     }, 200); // Wait 200 milliseconds before resizing and recentering
   });
@@ -341,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   const resetZoomBtn = document.getElementById("resetZoomBtn");
   resetZoomBtn.addEventListener('click', () => {
-    map.fitBounds(bounds.toArray(), { padding: 100 });
+    map.fitBounds(bounds.toArray(), { padding: padding });
   });
 });
 
