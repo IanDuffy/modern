@@ -88,6 +88,7 @@ function initMap(mapObject, selectedLocation = '') {
             mapObject.setZoom(12);
           }
         });
+        mapObject.fitBounds(bounds.toArray(), { padding: 25 });
       });
   
       // Hide the geocoder by default
@@ -146,6 +147,7 @@ function initMap(mapObject, selectedLocation = '') {
       .setLngLat(marker.geometry.coordinates)
       .addTo(mapObject);
   }
+  
   mapObject.on('load', () => {
     const closeCardButtons = document.querySelectorAll('.close-card-button');
     closeCardButtons.forEach(btn => {
