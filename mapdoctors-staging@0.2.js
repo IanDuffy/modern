@@ -5,7 +5,7 @@ let selectedAddress = '';
 let ogLocations = locationArr;
 let map;
 
-function initMap(lat, long, zoom, mapObject, selectedLocation = '') {
+function initMap(zoom, mapObject, selectedLocation = '') {
   mapboxgl.accessToken = 'pk.eyJ1IjoiaWR1ZmZ5IiwiYSI6ImNsZTUzZTAwZTA2cXEzd25xdDYxcTY2M3IifQ._wA9UjVFdBBYeyx30y-kVw';
   const geojson = {
     'type': 'FeatureCollection',
@@ -130,7 +130,7 @@ function initMap(lat, long, zoom, mapObject, selectedLocation = '') {
   return mapObject;
 }
 
-map = initMap(latitude, longitude, zoom, null, '');
+map = initMap(zoom, null, '');
 
 function setMarkerOpacity(selectedLocation, selectedMarkerMessage, selectedMarker = null) {
   const markers = document.querySelectorAll('.marker');
