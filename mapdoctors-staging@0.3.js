@@ -5,7 +5,7 @@ let selectedAddress = '';
 let ogLocations = locationArr;
 let map;
 
-function initMap(zoom, mapObject, selectedLocation = '') {
+function initMap(mapObject, selectedLocation = '') {
   mapboxgl.accessToken = 'pk.eyJ1IjoiaWR1ZmZ5IiwiYSI6ImNsZTUzZTAwZTA2cXEzd25xdDYxcTY2M3IifQ._wA9UjVFdBBYeyx30y-kVw';
   const geojson = {
     'type': 'FeatureCollection',
@@ -130,7 +130,7 @@ function initMap(zoom, mapObject, selectedLocation = '') {
   return mapObject;
 }
 
-map = initMap(zoom, null, '');
+map = initMap(null, '');
 
 function setMarkerOpacity(selectedLocation, selectedMarkerMessage, selectedMarker = null) {
   const markers = document.querySelectorAll('.marker');
@@ -172,7 +172,7 @@ function onFilterChipClick(event) {
     const locationCoordinates = locationArr[0].geometry.coordinates;
 
     // Zoom into the selected location
-    map.flyTo({ center: locationCoordinates, zoom: 14 });
+    map.flyTo({ center: locationCoordinates });
 
     // Find the matching location card for the selected location
     const locationCard = Array.from(document.querySelectorAll('[data-text="location"]'))
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedLocationData = locationArr.find(x => x && x.properties && x.properties.message.includes(selectedLocation));
         // If the location data exists, recenter the map to this location
         if (selectedLocationData && selectedLocationData.geometry) {
-          map.flyTo({ center: selectedLocationData.geometry.coordinates, zoom: 14 });
+          map.flyTo({ center: selectedLocationData.geometry.coordinates });
         }
       } else {
         // If no filter is active, recenter the map to the original center
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // If the location data exists, recenter the map to this location
     if (selectedLocationData && selectedLocationData.geometry) {
-      map.flyTo({ center: selectedLocationData.geometry.coordinates, zoom: 14 });
+      map.flyTo({ center: selectedLocationData.geometry.coordinates });
     }
   }
   
