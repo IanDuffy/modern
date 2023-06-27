@@ -5,7 +5,7 @@ let selectedAddress = '';
 let ogLocations = locationArr;
 let map;
 let bounds;
-let padding = 100;
+
 
 function initMap(mapObject, selectedLocation = '') {
   mapboxgl.accessToken = 'pk.eyJ1IjoiaWR1ZmZ5IiwiYSI6ImNsZTUzZTAwZTA2cXEzd25xdDYxcTY2M3IifQ._wA9UjVFdBBYeyx30y-kVw';
@@ -80,7 +80,7 @@ function initMap(mapObject, selectedLocation = '') {
                   selectedBounds.extend(feature.geometry.coordinates);
                 });
               selectedBounds.extend(event.result.geometry.coordinates);
-              mapObject.fitBounds(selectedBounds.toArray(), { padding: padding });
+              mapObject.fitBounds(selectedBounds.toArray(), { padding: 100 });
             }
           } else {
             // If no filter is active, center the map to the new point and set the zoom level to 10
@@ -153,7 +153,7 @@ function initMap(mapObject, selectedLocation = '') {
         document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
         setMarkerOpacity('', '');
         // Zoom back out when closing the card
-        map.fitBounds(bounds.toArray(), { padding: padding });
+        map.fitBounds(bounds.toArray(), { padding: 100 });
       });
     });
   });
@@ -246,7 +246,7 @@ function onFilterChipClick(event) {
   } else {
     // If no location is selected, reset the locationArr and zoom out
     locationArr = ogLocations;
-    map.fitBounds(bounds.toArray(), { padding: padding });
+    map.fitBounds(bounds.toArray(), { padding: 100 });
   }
 }
 
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else {
         // If no filter is active, recenter the map to the original center
-        map.fitBounds(bounds.toArray(), { padding: padding });
+        map.fitBounds(bounds.toArray(), { padding: 100 });
       }
     }, 200); // Wait 200 milliseconds before resizing and recentering
   });
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   const resetZoomBtn = document.getElementById("resetZoomBtn");
   resetZoomBtn.addEventListener('click', () => {
-    map.fitBounds(bounds.toArray(), { padding: padding });
+    map.fitBounds(bounds.toArray(), { padding: 100 });
   });
 });
 
