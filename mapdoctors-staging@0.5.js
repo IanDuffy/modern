@@ -12,10 +12,10 @@ function initMap(mapObject, selectedLocation = '') {
     'features': locationArr
   };
 
-  const bounds = new mapboxgl.LngLatBounds();
-    geojson.features.forEach(feature => {
-      bounds.extend(feature.geometry.coordinates);
-    });
+  let bounds = new mapboxgl.LngLatBounds();
+  geojson.features.forEach(feature => {
+    bounds.extend(feature.geometry.coordinates);
+  });
 
   if (!mapObject) {
    mapObject = new mapboxgl.Map({
@@ -128,7 +128,7 @@ function initMap(mapObject, selectedLocation = '') {
         document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
         setMarkerOpacity('', '');
         // Zoom back out when closing the card
-        map.fitBounds(bounds.toArray());
+        map.fitBounds(bounds.toArray(), { padding: 20 });
       });
     });
   });
@@ -221,7 +221,7 @@ function onFilterChipClick(event) {
   } else {
     // If no location is selected, reset the locationArr and zoom out
     locationArr = ogLocations;
-    map.fitBounds(bounds.toArray());
+    map.fitBounds(bounds.toArray(), { padding: 20 });
   }
 }
 
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else {
         // If no filter is active, recenter the map to the original center
-        map.fitBounds(bounds.toArray());
+        map.fitBounds(bounds.toArray(), { padding: 20 });
       }
     }, 200); // Wait 200 milliseconds before resizing and recentering
   });
@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   const resetZoomBtn = document.getElementById("resetZoomBtn");
   resetZoomBtn.addEventListener('click', () => {
-    map.fitBounds(bounds.toArray());
+    map.fitBounds(bounds.toArray(), { padding: 20 });
   });
 });
 
