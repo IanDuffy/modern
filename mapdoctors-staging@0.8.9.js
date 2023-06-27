@@ -5,7 +5,8 @@ let selectedAddress = '';
 let ogLocations = locationArr;
 let map;
 let bounds;
-let padding = 24;
+let paddingSm = 24;
+let paddingLg = 96;
 
 
 function initMap(mapObject, selectedLocation = '') {
@@ -32,12 +33,15 @@ function initMap(mapObject, selectedLocation = '') {
         accessToken: mapboxgl.accessToken, // Set the access token
         mapboxgl: mapboxgl, // Set the mapbox-gl instance
         marker: false, // Do not use the default marker style
-        placeholder: 'Search for address', // Placeholder text for the search bar
+        placeholder: 'Search', // Placeholder text for the search bar
         bbox: [], // Add a boundary if needed
       });
   
       // Add the geocoder to the map
       mapObject.addControl(geocoder);
+      
+      // Hide the geocoder by default
+      document.querySelector('.mapboxgl-ctrl-geocoder').style.display = 'none';
       
       // After the map style has loaded on the page,
       // add a source layer and default styling for a single point
@@ -81,7 +85,7 @@ function initMap(mapObject, selectedLocation = '') {
                   selectedBounds.extend(feature.geometry.coordinates);
                 });
               selectedBounds.extend(event.result.geometry.coordinates);
-              mapObject.fitBounds(selectedBounds.toArray(), { padding: padding });
+              mapObject.fitBounds(selectedBounds.toArray(), { padding: paddingSm });
             }
           } else {
             // If no filter is active, center the map to the new point and set the zoom level to 10
@@ -89,7 +93,7 @@ function initMap(mapObject, selectedLocation = '') {
             mapObject.setZoom(12);
           }
         });
-        mapObject.fitBounds(bounds.toArray(), { padding: padding });
+        mapObject.fitBounds(bounds.toArray(), { padding: paddingSm });
       });
   
       // Hide the geocoder by default
@@ -148,7 +152,7 @@ function initMap(mapObject, selectedLocation = '') {
       .setLngLat(marker.geometry.coordinates)
       .addTo(mapObject);
     // Fit bounds after all markers have been added
-    mapObject.fitBounds(bounds.toArray(), { padding: padding });
+    mapObject.fitBounds(bounds.toArray(), { padding: paddingSm });
   }
   
   mapObject.on('load', () => {
@@ -158,7 +162,7 @@ function initMap(mapObject, selectedLocation = '') {
         document.querySelectorAll('.location--card-item').forEach(card => card.style.display = 'none');
         setMarkerOpacity('', '');
         // Zoom back out when closing the card
-        map.fitBounds(bounds.toArray(), { padding: padding });
+        map.fitBounds(bounds.toArray(), { padding: paddingSm });
       });
     });
   });
@@ -251,7 +255,7 @@ function onFilterChipClick(event) {
   } else {
     // If no location is selected, reset the locationArr and zoom out
     locationArr = ogLocations;
-    map.fitBounds(bounds.toArray(), { padding: padding });
+    map.fitBounds(bounds.toArray(), { padding: paddingSm });
   }
 }
 
@@ -294,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } else {
         // If no filter is active, recenter the map to the original center
-        map.fitBounds(bounds.toArray(), { padding: padding });
+        map.fitBounds(bounds.toArray(), { padding: paddingLg });
       }
     }, 200); // Wait 200 milliseconds before resizing and recentering
   });
@@ -342,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   const resetZoomBtn = document.getElementById("resetZoomBtn");
   resetZoomBtn.addEventListener('click', () => {
-    map.fitBounds(bounds.toArray(), { padding: padding });
+    map.fitBounds(bounds.toArray(), { padding: paddingLg });
   });
 });
 
