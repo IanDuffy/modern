@@ -12,6 +12,11 @@ function initMap(mapObject, selectedLocation = '') {
     'features': locationArr
   };
 
+  const bounds = new mapboxgl.LngLatBounds();
+    geojson.features.forEach(feature => {
+      bounds.extend(feature.geometry.coordinates);
+    });
+
   if (!mapObject) {
    mapObject = new mapboxgl.Map({
       container: 'map',
