@@ -106,6 +106,13 @@ document.addEventListener("DOMContentLoaded", function() {
   let faqItems = document.querySelectorAll('.faq-rich-text h3');
   faqItems.forEach((item) => {
     item.addEventListener('click', () => {
+      // First, close all items
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('is--expanded');
+        }
+      });
+      // Then, open or toggle the clicked item
       item.classList.toggle('is--expanded');
     });
   });
