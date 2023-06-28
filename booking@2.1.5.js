@@ -5,10 +5,10 @@ iniDoctorsTab();
 iniLocationsTab();
 iniDoctorCta();
 iniLocationCta();
+iniDoctorHours();
 initializeIframe();
 iniRadioButtons();
 checkIncomingData()
-
 
 function initData() {
     frame = [];
@@ -35,17 +35,21 @@ function iniStarterTab() {
 
     sidebarDoctorPlaceholder.addEventListener('click', (e) => {
         if (doctorId === null && locationId === null) {
-            navigateTab(doctorsTab)
+            doctorCards.forEach(card => showParent(card))
+            locationCards.forEach(card => showParent(card))
             sidebarDoctorPlaceholder.classList.add('active')
             sidebarLocationPlaceholder.classList.remove('active')
+            navigateTab(doctorsTab)
         }
     })
 
     sidebarLocationPlaceholder.addEventListener('click', (e) => {
         if (doctorId === null && locationId === null) {
-            navigateTab(locationsTab)
+            doctorCards.forEach(card => showParent(card))
+            locationCards.forEach(card => showParent(card))
             sidebarLocationPlaceholder.classList.add('active')
             sidebarDoctorPlaceholder.classList.remove('active')
+            navigateTab(locationsTab)
         }
     })
 
@@ -63,68 +67,62 @@ function iniStarterTab() {
 
     doctorHours = document.querySelector('#doctor-working-hours')
 
-    tabs = [starterTab,doctorsTab,locationsTab,iframeTab];
+    tabs = [starterTab, doctorsTab, locationsTab, iframeTab];
 
     selectDoctor.addEventListener("click", (e) => {
-        navigateTab(doctorsTab);
         sidebarLocationPlaceholder.classList.remove('active')
         sidebarDoctorPlaceholder.classList.add('active')
-        navigateDoctorRegion('doctor-region-all')
+        navigateDoctorRegion('all')
+        navigateTab(doctorsTab);
     });
 
     selectLocation.addEventListener("click", (e) => {
-        navigateTab(locationsTab);
         sidebarLocationPlaceholder.classList.add('active')
         sidebarDoctorPlaceholder.classList.remove('active')
-        navigateLocationRegion('location-region-all')
+        navigateLocationRegion('all')
+        navigateTab(locationsTab);
     });
 }
 
 function iniDoctorsTab() {
     doctorCards = document.querySelectorAll('[card-doctor]');
-    doctorRegionAll = document.querySelector('#doctor-region-all');
-    doctorRegionTampa = document.querySelector('#doctor-region-tampa');
-    doctorRegionOrlando = document.querySelector('#doctor-region-orlando');
 
-    doctorThumbnails = document.querySelectorAll('[doctor-thumbnail]');
-
-    doctorRegions = [doctorRegionAll, doctorRegionTampa, doctorRegionOrlando];
-
-    doctorRegions.forEach(region => {
-        region.addEventListener('click', (e) => {
-            navigateDoctorRegion(region.id);
-            singleClassChange(doctorRegions, region, 'active')
+    doctorRegions = [];
+    docRegions = document.querySelectorAll('[region-tab-doctors]')
+    docRegions.forEach(region => {
+        doctorRegions[region.attributes['region-tab-doctors'].value.toLowerCase()] = document.querySelector('[region-tab-doctors=' + region.attributes['region-tab-doctors'].value + ']');
+        doctorRegions[region.attributes['region-tab-doctors'].value.toLowerCase()].addEventListener('click', (e) => {
+            navigateDoctorRegion(region.attributes['region-tab-doctors'].value);
+            singleClassChange(docRegions, region, 'active')
         })
     })
+
+    doctorThumbnails = document.querySelectorAll('[doctor-thumbnail]');
 }
 
 function iniLocationsTab() {
     locationCards = document.querySelectorAll('[card-location]');
-    locationRegionAll = document.querySelector('#location-region-all');
-    locationRegionTampa = document.querySelector('#location-region-tampa');
-    locationRegionOrlando = document.querySelector('#location-region-orlando');
+
+    locationRegions = [];
+    locRegions = document.querySelectorAll('[region-tab-locations]');
+    locRegions.forEach(region => {
+        locationRegions[region.attributes['region-tab-locations'].value.toLowerCase()] = document.querySelector('[region-tab-locations=' + region.attributes['region-tab-locations'].value + ']');
+        locationRegions[region.attributes['region-tab-locations'].value.toLowerCase()].addEventListener('click', (e) => {
+            navigateLocationRegion(region.attributes['region-tab-locations'].value);
+            singleClassChange(locRegions, region, 'active')
+        })
+    })
 
     locationThumbnails = document.querySelectorAll('[location-thumbnail]');
     locationDetails = document.querySelector('#location-details')
     locationMaps = document.querySelectorAll('[location-map]');
     map = document.querySelector('#booking-map-sidebar')
-
     locationAddress = document.querySelector('#location-address');
     locationZip = document.querySelector('#location-zip')
-
-    locationRegions = [locationRegionAll, locationRegionTampa, locationRegionOrlando];
-
-    locationRegions.forEach(region => {
-        region.addEventListener('click', (e) => {
-            navigateLocationRegion(region.id);
-            singleClassChange(locationRegions, region, 'active')
-        })
-    })
 }
 
 function iniDoctorCta() {
     doctorCtas = document.querySelectorAll('[doctor-cta]');
-
     doctorCtas.forEach(cta => {
         cta.addEventListener('click', (e) => {
             doctorId = cta.attributes['doctor-cta'].value;
@@ -136,54 +134,98 @@ function iniDoctorCta() {
 
 function iniLocationCta() {
     locationCtas = document.querySelectorAll('[location-cta]');
-
     locationCtas.forEach(cta => {
         cta.addEventListener('click', (e) => {
             locationId = cta.attributes['location-cta'].value
+
+            doctorCards.forEach(card => {
+                card.querySelectorAll('[doctor-hours-tab]').forEach(tab => {
+                    if (tab.attributes['doctor-hours-id'].value.includes(locationId)) {
+                        tab.parentElement.classList.add('active')
+                    } else {
+                        tab.parentElement.classList.remove('active')
+                    }
+                })
+
+                card.querySelectorAll('[location-hours]').forEach(hours => {
+                    if (hours.attributes['location-hours'].value.includes(locationId)) {
+                        show(hours)
+                    } else {
+                        hide(hours)
+                    }
+                })
+            })
+
             doctorId === null ? navigateTab(doctorsTab) : navigateTab(iframeTab)
             populateSidebar();
         })
     })
 }
 
+function iniDoctorHours() {
+    resetDoctorHours()
+
+    doctorCards.forEach(card => {
+        card.querySelectorAll('[doctor-hours-tab]').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                card.querySelectorAll('[doctor-hours-card]').forEach(hours => {
+                    if (hours.attributes['doctor-hours-card'].value === tab.innerHTML) {
+                        show(hours)
+                    } else {
+                        hide(hours)
+                    }
+                })
+                card.querySelectorAll('[doctor-hours-tab]').forEach(docTab => {
+                    if (docTab.attributes['doctor-hours-tab'].value === tab.attributes['doctor-hours-tab'].value) {
+                        docTab.parentElement.classList.add('active')
+                    } else {
+                        docTab.parentElement.classList.remove('active')
+                    }
+                })
+            })
+        })
+    })
+}
+
 function iniNavButtons() {
+    mainNav = document.querySelectorAll('.card-filter-wrap');
+
     closeButton = document.querySelector('#close-button');
     backButton = document.querySelector('#back-button');
-
     closeButton.addEventListener('click', (e) => location.href = '/');
-    
     backButton.addEventListener('click', (e) => {
         switch (findActiveTab()) {
             case 'starter-tab':
                 location.href = '/'
+                resetDoctorHours()
                 break;
             case 'all-doctors-tab':
                 if (locationId) {
                     locationId = null
-                    navigateTab(locationsTab)
                     populateSidebar()
-                    navigateLocationRegion('location-region-all')
+                    navigateLocationRegion('all')
                     sidebarLocationPlaceholder.classList.add('active')
                     sidebarDoctorPlaceholder.classList.remove('active')
+                    navigateTab(locationsTab)
                 } else {
                     navigateTab(starterTab)
                 }
-
+                resetDoctorHours()
                 break;
             case 'all-locations-tab':
                 if (doctorId) {
                     doctorId = null
-                    navigateTab(doctorsTab)
-                    navigateDoctorRegion('doctor-region-all')
+                    navigateDoctorRegion('all')
                     populateSidebar()
                     sidebarLocationPlaceholder.classList.remove('active')
                     sidebarDoctorPlaceholder.classList.add('active')
+                    navigateTab(doctorsTab)
                 } else {
                     sidebarLocationPlaceholder.classList.remove('active')
                     sidebarDoctorPlaceholder.classList.remove('active')
                     navigateTab(starterTab)
                 }
-
+                resetDoctorHours()
                 break;
             case 'iframe-tab':
                 if (prev === 'ref') {
@@ -191,32 +233,33 @@ function iniNavButtons() {
                     break;
                 }
 
-                console.log(doctorId)
-                console.log(locationId)
-
                 if (prev === 'all-doctors-tab') {
                     doctorId = null
                     navigateTab(doctorsTab)
                     populateSidebar()
-                    navigateDoctorRegion('doctor-region-all')
+                    navigateDoctorRegion('all')
                 }
 
                 if (prev === 'all-locations-tab') {
                     locationId = null
                     navigateTab(locationsTab)
                     populateSidebar()
-                    navigateLocationRegion('location-region-all')
+                    navigateLocationRegion('all')
                 }
-
                 break;
         }
     })
 }
 
 function populateSidebar() {
+
+    radioLocation.forEach(button => button.querySelector('.booking-radio-button').classList.remove('checked'));
+    radioDoctor.forEach(button => button.querySelector('.booking-radio-button').classList.remove('checked'));
+
     if (doctorId && locationId) {
         sidebarDoctorPlaceholder.querySelector('img').src = getThumbnailsSrc(doctorThumbnails, doctorId, 'doctor');
         sidebarDoctorPlaceholder.querySelector('.booking-item-title').innerHTML = document.querySelector('[doctor-name="' + doctorId + '"]').innerHTML;
+        sidebarDoctorPlaceholder.querySelector('.booking-item-subtitle').innerHTML = document.querySelector('[location-name="' + locationId + '"]').innerHTML
         sidebarLocationTitle.innerHTML = 'Locations for ' + document.querySelector('[doctor-name="' + doctorId + '"]').innerHTML;
         sidebarLocationPlaceholder.querySelector('img').src = getThumbnailsSrc(locationThumbnails, locationId, 'location');
         sidebarLocationPlaceholder.querySelector('.booking-item-title').innerHTML = document.querySelector('[location-name="' + locationId + '"]').innerHTML
@@ -226,7 +269,6 @@ function populateSidebar() {
         show(locationDetails)
         show(map)
         map.querySelector('img').src = getMapSrc(locationId);
-
         show(sidebarDoctor)
         show(sidebarLocation)
         show(sidebarDoctorPlaceholder)
@@ -275,10 +317,11 @@ function populateSidebar() {
         return;
     }
 
-    sidebarLocationPlaceholder.querySelector('img').src = 'https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/6463e481967df28518616d6c_person_outline_24px.svg';
+    sidebarLocationPlaceholder.querySelector('img').src = 'https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/646a284464dc0b5ec35aa7ab_museum.svg';
     sidebarLocationPlaceholder.querySelector('.booking-item-title').innerHTML = 'Select Location'
-    sidebarDoctorPlaceholder.querySelector('img').src = 'https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/6463e481967df28518616d6c_person_outline_24px.svg';
+    sidebarDoctorPlaceholder.querySelector('img').src = 'https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/646a28190847ecf19cb661ac_supervised_user_circle.svg';
     sidebarDoctorPlaceholder.querySelector('.booking-item-title').innerHTML = 'Select Doctor'
+    sidebarDoctorPlaceholder.querySelector('.booking-item-subtitle').innerHTML  = 'Select Location'
 
     show(sidebarLocationPlaceholder)
     show(sidebarDoctorPlaceholder)
@@ -296,6 +339,12 @@ function navigateTab(newTab) {
 
     show(newTab);
 
+    if (doctorId || locationId) {
+        mainNav.forEach(nav => nav.style.display = 'none')
+    } else {
+        mainNav.forEach(nav => nav.style.display = 'flex')
+    }
+
     if (newTab === iframeTab) {
         populateSidebar()
         getIframe()
@@ -305,7 +354,7 @@ function navigateTab(newTab) {
         doctorCards.forEach(card => locationId.includes(card.attributes['card-doctor'].value) ? showParent(card) : hideParent(card));
     }
 
-    if (doctorId)  {
+    if (doctorId) {
         locationCards.forEach(card => card.attributes['card-location'].value.includes(doctorId) ? showParent(card) : hideParent(card));
     }
 
@@ -316,13 +365,17 @@ function navigateTab(newTab) {
         show(starterText)
         hide(backButton)
     }
+
+    setTimeout(() => {
+        document.querySelector('#topScroll').scrollIntoView({behavior: 'smooth'})
+    }, '50');
 }
 
 function navigateDoctorRegion(newRegion) {
-    switch (newRegion) {
-        case 'doctor-region-all': doctorCards.forEach(card => showParent(card)); break;
-        case 'doctor-region-tampa': doctorCards.forEach(card => card.querySelector('.doctor-region').innerHTML === 'Tampa' ? showParent(card) : hideParent(card)); break;
-        case 'doctor-region-orlando': doctorCards.forEach(card => card.querySelector('.doctor-region').innerHTML === 'Orlando' ? showParent(card) : hideParent(card)); break;
+    if (newRegion === 'all') {
+        doctorCards.forEach(card => showParent(card));
+    } else {
+        doctorCards.forEach(card => card.querySelector('.doctor-region').innerHTML === newRegion ? showParent(card) : hideParent(card));
     }
 
     if (locationId) {
@@ -333,10 +386,10 @@ function navigateDoctorRegion(newRegion) {
 }
 
 function navigateLocationRegion(newRegion) {
-    switch (newRegion) {
-        case 'location-region-all': locationCards.forEach(card => showParent(card)); break;
-        case 'location-region-tampa': locationCards.forEach(card => card.querySelector('.location-region').innerHTML === 'Tampa' ? showParent(card) : hideParent(card)); break;
-        case 'location-region-orlando': locationCards.forEach(card => card.querySelector('.location-region').innerHTML === 'Orlando' ? showParent(card) : hideParent(card)); break;
+    if (newRegion === 'all') {
+        locationCards.forEach(card => showParent(card));
+    } else {
+        locationCards.forEach(card => card.querySelector('.location-region').innerHTML === newRegion ? showParent(card) : hideParent(card));
     }
 
     if (doctorId) {
@@ -403,7 +456,7 @@ function getMapSrc(value) {
 function initializeIframe() {
     const iframe = document.querySelector('.booking-iframe iframe');
 
-    iframe.addEventListener('load', function() {
+    iframe.addEventListener('load', function () {
         const bookingLoader = document.querySelector('.booking--loader');
         if (bookingLoader) {
             bookingLoader.style.display = 'none';
@@ -425,6 +478,8 @@ function getIframe() {
                     frameID = f.iframe
                     url = 'https://drchrono.com/scheduling/offices/' + frameID
                     document.querySelector('.booking-iframe iframe').src = url
+
+                    document.querySelector('.booking-iframe iframe').reload(true);
                 }
             })
         }
@@ -487,6 +542,24 @@ function checkIncomingData() {
         navigateTab(doctorsTab)
         populateSidebar()
 
+        doctorCards.forEach(card => {
+            card.querySelectorAll('[doctor-hours-tab]').forEach(tab => {
+                if (tab.attributes['doctor-hours-id'].value.includes(locationId)) {
+                    tab.parentElement.classList.add('active')
+                } else {
+                    tab.parentElement.classList.remove('active')
+                }
+            })
+
+            card.querySelectorAll('[location-hours]').forEach(hours => {
+                if (hours.attributes['location-hours'].value.includes(locationId)) {
+                    show(hours)
+                } else {
+                    hide(hours)
+                }
+            })
+        })
+
         return;
     }
 }
@@ -506,4 +579,25 @@ function starterSidebarTabs() {
 
     sidebarLocationPlaceholder.classList.remove('active')
     sidebarDoctorPlaceholder.classList.remove('active')
+}
+
+function resetDoctorHours() {
+    hourTabs = document.querySelectorAll('.tab-flex-wrap');
+    hourTabs.forEach(tab => tab.childNodes.forEach((tab, index) => {
+        if (index > 0) {
+            tab.classList.remove('active')
+        } else {
+            tab.classList.add('active')
+        }
+    }))
+
+    doctorCards.forEach(card => {
+        card.querySelectorAll('[doctor-hours-card]').forEach((hours,index) => {
+            if (index === 0) {
+                show(hours)
+            } else {
+                hide(hours)
+            }
+        })
+    })
 }
