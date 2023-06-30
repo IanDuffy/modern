@@ -36,6 +36,8 @@ body {
    outline-offset: 0.125rem;
 }
 
+/* Nav Menu */
+
 @media screen and (max-width:1024px) and (min-width:992px) {
   	.custom-hide {
     	display: none;
@@ -96,6 +98,7 @@ body {
   .no-scroll {
     overflow: hidden;
 	}
+
 .slider-snap-list, .slider-snap-list-small, .review-carousel {
   direction: ltr;
   overflow-x: scroll;
@@ -109,6 +112,9 @@ body {
 .scroll-snap-item, .card-review {
   scroll-snap-align: center;
  }
+
+/* Review Carousel */
+
  .review-carousel > .card-review:nth-child(4n+1) {
   background-color: #f8edfb;
 }
@@ -145,6 +151,7 @@ body {
     display: none;
     }
 
+/* horizontal Scroller */
 
 .icon-button-outline.is-disabled .icon-button-inner {
     border-color: rgba(28, 27, 31, 0.12);
@@ -160,17 +167,9 @@ body {
     opacity: 0.38;
   }
 
-.faq-item.is--expanded .faq-text-content-block{
-  	height: auto;
-  }
-  .faq-item.is--expanded .faq-answer-content {
-    padding-bottom: 3rem;
-  }
-  .faq-item.is--expanded .faq-arrow{
-  	transform: rotate(180deg);
-  }
-  
-  .reviewer-quote {
+/* review card reveal */
+
+.reviewer-quote {
 	display: -webkit-box;
 	overflow: hidden;
 	-webkit-line-clamp: 5;
@@ -182,12 +181,25 @@ body {
 	-webkit-line-clamp: unset;
 }
 
+/* FAQ Expanding */
+
+.faq-item.is--expanded .faq-text-content-block{
+  	height: auto;
+  }
+  .faq-item.is--expanded .faq-answer-content {
+    padding-bottom: 3rem;
+  }
+  .faq-item.is--expanded .faq-arrow{
+  	transform: rotate(180deg);
+  }
+
 .faq-rich-text .is--expanded + p {
 	height: auto;
   padding-bottom: 1rem;
   transform: translate(0rem,0rem);
   opacity: 1;
 }
+
 .faq-rich-text h3::after {
     content: "";
     display: inline-block;
@@ -202,6 +214,7 @@ body {
 h3.is--expanded::after {
     transform: rotate(-180deg);
 }
+
 .reasons-rich li::before {
     content: ""; 
     position: absolute;
@@ -217,6 +230,9 @@ h3.is--expanded::after {
     background-position: center;
     background-size: 1.3em;
 }
+
+/* Doctor Page Styles */
+
 .about-richtext {
 	display: -webkit-box;
 	overflow: hidden;
@@ -227,4 +243,72 @@ h3.is--expanded::after {
 .about-richtext.is--full {
 	overflow: visible;
 	-webkit-line-clamp: unset;
+}
+
+/* map card styles */
+
+@media screen and (min-width:992px) {
+  #resetZoomBtn {
+    display:none;
+  }
+}
+
+.locations_card-grid-wrapper.is--expanded .map-card-wrapper {
+	grid-area: Expanded / Expanded / Expanded / Expanded;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+}
+
+.locations_card-grid-wrapper.is--expanded #resetZoomBtn {
+	display: block;
+}
+
+.locations_card-grid-wrapper.is--expanded .map-card-wrapper .map-background{
+	display: block;
+}
+
+.locations_card-grid-wrapper.is--expanded .map-cards-wrap {
+	display: block;
+}
+
+.locations_card-wrapper {
+	grid-area: 1 / 2 / 3 / 3;
+}
+
+.locations_card-grid-wrapper.is--expanded .locations_card-wrapper {
+	grid-area: Cards / Cards / Cards / Cards;
+}
+
+@media screen and (max-width:991px) {
+  .locations_card-grid-wrapper.is--expanded .map-thumbnail-ratio {
+	 padding-top: 100%
+  }
+}
+
+/* Single Location Markers */
+
+.marker {
+    display: block;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    background-image: url("https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/645a4eb387614de4c366cb27_Marker.svg");
+    background-repeat: no-repeat;
+}
+
+.marker.marker-selected {
+  background-image: url("https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/645a453f8cfb320158b7f8d3_Marker.svg");
+}
+
+.marker-large {
+    display: block;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    background-image: url("https://uploads-ssl.webflow.com/640801637e0e2c44c99a32f0/645a453f8cfb320158b7f8d3_Marker.svg");
+    background-repeat: no-repeat;
+    width: 40px; /* Add a width */
+    height: 40px; /* Add a height */
+    background-size: 40px 40px; /* Make sure the background image fits the marker size */
 }
