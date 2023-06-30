@@ -53,6 +53,22 @@ body {
     overflow: hidden;
 	}
 
+/* Filter tab items */
+
+.tab-flex-item.is--active::after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    left: 0;
+    display: block;
+    bottom:0px;
+    background-color: #005faf;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    z-index: 9;
+	}
+
 /* Get rid of top margin on first element in any rich text element */
 .w-richtext > :not(div):first-child, .w-richtext > div:first-child > :first-child {
   margin-top: 0 !important;
@@ -230,6 +246,27 @@ h3.is--expanded::after {
     background-position: center;
     background-size: 1.3em;
 }
+
+/* Split Doctor Location CTA Styles */
+
+@media screen and (min-width: 992px) {
+    .image-card-square:hover {
+      width: 75%
+    }
+    .image-card-square:hover  .dual-cta-image {
+      transform: translate(0rem, 0px)
+    }
+    .image-card-square:hover  .dual-reveal-content {
+      transform: translate(0rem, 0px)
+    }
+    .image-card-square:hover  .dual-cta-text-animated {
+       height: 70%
+    }
+
+   .image-card-square:hover .dual-cta-image-wrap {
+    opacity: 0;
+   }
+ }
 
 /* Doctor Page Styles */
 
