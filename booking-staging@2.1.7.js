@@ -461,10 +461,15 @@ function initializeIframe() {
         if (bookingLoader) {
             bookingLoader.style.display = 'none';
         }
-       // Add tracking functionality
+        // Add tracking functionality
         var doctorName = document.querySelector('#sidebar-doctor-placeholder .booking-item-title').innerHTML.trim();
         var locationName = document.querySelector('#sidebar-location-placeholder .booking-item-title').innerHTML.trim();
-        console.log('Doctor:', doctorName, 'Location:', locationName); // Log to console
+        
+        // Send event to Google Analytics
+        gtag('event', 'iframe_loaded', {
+            'event_category': 'booking',
+            'event_label': 'Doctor: ' + doctorName + ', Location: ' + locationName
+        });
     });
 }
 
