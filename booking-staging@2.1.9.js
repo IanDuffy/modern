@@ -466,21 +466,16 @@ function initializeIframe() {
         // Add tracking functionality for iframe load
         var doctorName = document.querySelector('#sidebar-doctor-placeholder .booking-item-title').innerHTML.trim();
         var locationName = document.querySelector('#sidebar-location-placeholder .booking-item-title').innerHTML.trim();
-        
-        // Log to console
-        console.log('Iframe loaded with Doctor:', doctorName, 'Location:', locationName);
 
         // Send event to Google Analytics for iframe load
         gtag('event', 'iframe_loaded', {
             'event_category': 'booking',
-            'event_label': 'Doctor: ' + doctorName + ', Location: ' + locationName
+            'event_label': 'Iframe viewed: ' + doctorName + locationName
         });
     });
 
     // Track mouseover event on desktop
     iframe.addEventListener('mouseover', function() {
-        console.log('Iframe hovered'); // Log to console
-
         gtag('event', 'iframe_mouseover', {
             'event_category': 'booking',
             'event_label': 'Iframe hovered'
@@ -489,19 +484,15 @@ function initializeIframe() {
 
     // Track when the close button is clicked
     closeButton.addEventListener('click', function() {
-        console.log('Iframe closed by user'); // Log to console
-
         gtag('event', 'iframe_closed', {
             'event_category': 'booking',
-            'event_label': 'Iframe closed by user'
+            'event_label': 'Booking page closed by visitor'
         });
     });
 
     // Track when the mouse leaves the window
     document.addEventListener('mouseout', function(event) {
         if (!event.toElement && !event.relatedTarget) {
-            console.log('Mouse left the window'); // Log to console
-
             gtag('event', 'mouse_left_window', {
                 'event_category': 'booking',
                 'event_label': 'Mouse left the window'
