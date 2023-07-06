@@ -463,18 +463,15 @@ function initializeIframe() {
             bookingLoader.style.display = 'none';
         }
 
-        // Add tracking functionality for iframe load
         var doctorName = document.querySelector('#sidebar-doctor-placeholder .booking-item-title').innerHTML.trim();
         var locationName = document.querySelector('#sidebar-location-placeholder .booking-item-title').innerHTML.trim();
 
-        // Send event to Google Analytics for iframe load
         gtag('event', 'booking_iframe_loaded', {
             'event_category': 'booking',
-            'event_label': 'Iframe viewed: ' + doctorName + locationName
+            'event_label': doctorName + ' @ ' + locationName
         });
     });
 
-    // Track mouseover event on desktop
     iframe.addEventListener('mouseover', function() {
         gtag('event', 'booking_iframe_mouseover', {
             'event_category': 'booking',
@@ -482,7 +479,6 @@ function initializeIframe() {
         });
     });
 
-    // Track when the close button is clicked
     closeButton.addEventListener('click', function() {
         gtag('event', 'booking_closed', {
             'event_category': 'booking',
@@ -490,7 +486,6 @@ function initializeIframe() {
         });
     });
 
-    // Track when the mouse leaves the window
     document.addEventListener('mouseout', function(event) {
         if (!event.toElement && !event.relatedTarget) {
             gtag('event', 'booking_mouse_left_window', {
