@@ -465,7 +465,8 @@ function initializeIframe() {
 
         var doctorName = document.querySelector('#sidebar-doctor-placeholder .booking-item-title').innerHTML.trim();
         var locationName = document.querySelector('#sidebar-location-placeholder .booking-item-title').innerHTML.trim();
-
+        doctorName = doctorName.replace('Dr. ', '');
+      
         var eventName = 'Iframe_Loaded_' + doctorName.replace(/\s+/g, '_') + '_' + locationName.replace(/\s+/g, '_');
       
       console.log('Sending event to Google Analytics:', eventName);
