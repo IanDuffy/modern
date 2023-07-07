@@ -463,10 +463,10 @@ function initializeIframe() {
             bookingLoader.style.display = 'none';
         }
 
-        var doctorName = document.querySelector('#sidebar-doctor-placeholder .booking-item-title').innerHTML.trim();
-        var locationName = document.querySelector('#sidebar-location-placeholder .booking-item-title').innerHTML.trim();
-        doctorName = doctorName.replace('Dr. ', '');
-        var eventName = 'Iframe_View_' + doctorName.replace(/\s+/g, '_') + '_' + locationName.replace(/\s+/g, '_');
+      var doctorName = document.querySelector('#sidebar-doctor-placeholder .booking-item-title').textContent.trim();
+      var locationName = document.querySelector('#sidebar-location-placeholder .booking-item-title').textContent.trim();
+      doctorName = doctorName.replace('Dr. ', '');
+      var eventName = 'Iframe_View_' + doctorName.replace(/\s+/g, '_') + '_' + locationName.replace(/\s+/g, '_');
       
       // console.log('Sending event to Google Analytics:', eventName);
       
