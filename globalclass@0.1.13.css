@@ -349,3 +349,50 @@ h3.is--expanded::after {
     height: 40px; /* Add a height */
     background-size: 40px 40px; /* Make sure the background image fits the marker size */
 }
+
+/* Booking Styles */
+
+	.tab-flex-item.active.w-dyn-item::after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    left: 0;
+    display: block;
+    bottom:0px;
+    background-color: #005faf;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    z-index: 9;
+	}
+
+	.tab-flex-item:first-of-type .tab-indicator {
+  	display: block;
+  }
+	.booking-card-grid .w-dyn-item {
+  	min-width: 0px;
+    min-height: 0px;
+  }
+	.details-sidebar.active .trailing-icon{
+  	display: block;
+  }
+	@media screen and (max-width: 991px) {
+    .booking-controls-menu.is--expanded .grab-bar-toggle{
+      display: flex;
+    }
+    .is--expanded .frame-options-wrap, .is--expanded .section-subheader-divider, .is--expanded .booking-overheading, .is--expanded .logo-wrapper, .is--expanded .menu-hidden, .is--expanded .controls-stretch, .is--expanded .menu-scrim {
+    	display: block;
+    }
+    .is--expanded .appointment-details {
+    	flex-direction: column;
+    }
+    .is--expanded .expand-button, .is--expanded .booking-item-subtitle {
+    	display: none;
+    }
+    .booking-controls-menu:not(.is--expanded) .second-item {
+    	display: none;
+    }
+    .booking-controls-menu:not(.is--expanded) .booking-details {
+    	display: none!important;
+    }
+  }
