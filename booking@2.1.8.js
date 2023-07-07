@@ -466,10 +466,9 @@ function initializeIframe() {
         var doctorName = document.querySelector('#sidebar-doctor-placeholder .booking-item-title').innerHTML.trim();
         var locationName = document.querySelector('#sidebar-location-placeholder .booking-item-title').innerHTML.trim();
 
-        gtag('event', 'booking_iframe_loaded', {
-            'event_category': 'booking',
-            'event_label': doctorName + ' @ ' + locationName
-        });
+        gtag('event', 'Schedule View - ' + doctorName + ' - ' + locationName, {
+        'event_category': 'booking'
+      });
     });
 
     iframe.addEventListener('mouseover', function() {
