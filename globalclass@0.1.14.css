@@ -396,3 +396,29 @@ h3.is--expanded::after {
     	display: none!important;
     }
   }
+
+/* article styles */
+
+.article-rich img, .article-rich-break img {
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+@media screen and (min-width: 992px) {
+  .article-rich img {
+  aspect-ratio: 7/5;
+  }
+  .article-rich-break img {
+  aspect-ratio: 3/2;
+  }
+}
+
+.article-rich figure {
+  margin-bottom: 2em;
+  margin-top: 2em;
+}
+
+.article-rich-break figure {
+  margin-bottom: 0;
+}
