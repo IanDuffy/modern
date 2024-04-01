@@ -10,7 +10,7 @@ function hasQueryString(query) {
 function checkBannerDisplay() {
   // Only show the banner if 'moore' query parameter is present
   // and the 'bannerDismissed' flag is not set in local storage
-  if (hasQueryString('moore') && localStorage.getItem('bannerDismissed') !== 'true') {
+  if (hasQueryString('source=moore') && localStorage.getItem('bannerDismissed') !== 'true') {
     banner.style.display = 'block'; // Show banner
   } else {
     banner.style.display = 'none'; // Otherwise, ensure it's not shown
