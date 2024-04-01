@@ -54,6 +54,6 @@ organizeList();
 document.querySelectorAll('.filter-chip-wrapper').forEach(item => {
   item.addEventListener('click', () => {
     // Wait for the filtering action to complete before reorganizing. Adjust timeout as necessary.
-    setTimeout(organizeList, 100);
+    setTimeout(organizeList, 200);
   });
 });
