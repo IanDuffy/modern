@@ -24,6 +24,6 @@ This project is not open-source and is not licensed for public use. Any usage of
 
 ## Contact
 
-For more information or to request permission for use, please contact us at:
+For more information or to request permission for use, please contact Ian Duffy at:
 
-[Era Creative, LLC](mailto:hello@ianduffy.com)
+[hello@ianduffy.com](mailto:hello@ianduffy.com)
